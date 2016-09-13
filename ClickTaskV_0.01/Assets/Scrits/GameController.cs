@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+    private Vector2 _oldValueOfHealthBar;
 
     [SerializeField]
     private RectTransform _healthTimeBar;
@@ -11,23 +12,47 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject _timeIsOut;
 
+    [SerializeField]
+    private GameObject _retryButton;
+
     public bool TimeIsOutLetsEndThisGame = false;
 
     void Start()
     {
+        _oldValueOfHealthBar = _healthTimeBar.sizeDelta;
         InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
+        _retryButton.SetActive(false);
     }
 
     private void TimeDecrease()
     {
+        
         _healthTimeBar.sizeDelta = new Vector2(_healthTimeBar.sizeDelta.x - 0.1f, _healthTimeBar.sizeDelta.y);
-        if(_healthTimeBar.sizeDelta.x <= 0)
+        EndGame();
+    }
+
+    public void StartGame()
+    {
+        _healthTimeBar.sizeDelta = _oldValueOfHealthBar;
+        BigMom.ENC._scoreCounter = 0;
+        InvokeRepeating("TimeDecrease", 0, 0.05f);
+        _timeIsOut.SetActive(false);
+        _retryButton.SetActive(false);
+        BigMom.ENC.SpawnEnemy();
+
+    }
+
+
+    private void EndGame()
+    {
+        if (_healthTimeBar.sizeDelta.x <= 0)
         {
             CancelInvoke("TimeDecrease");
 
             TimeIsOutLetsEndThisGame = true;
             _timeIsOut.SetActive(true);
+            _retryButton.SetActive(true);
         }
     }
 	
