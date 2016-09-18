@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.IO;
+
 
 public class UsualClickerController : MonoBehaviour {
 
@@ -14,6 +17,11 @@ public class UsualClickerController : MonoBehaviour {
 
     public GameObject Monster;
 
+
+   
+
+    
+
     private const float MAX_SCALE_X_VALUE_FOR_HEALTHBAR = 12.4f;
     private const float BASE_HEALTH_DECREESE_COEFICIENT = 0.01f;
     private float _clickStrength;
@@ -23,15 +31,19 @@ public class UsualClickerController : MonoBehaviour {
 
     private float MonsterArmorLevel;
 
-   public EnemyController gg = new EnemyController();
+    public bool stopFastDecreaseTime = true;
 
+    private float correctiveHitStrangth;
+    // public EnemyController gg = new EnemyController();
+    private MonstersBasicClass currentMonster;
 
-
+   
     void Start()
     {
      _healthObjLockalScaleX = _healthBar.transform.localScale.x;
         _monsterHitbox = Monster.GetComponent<BoxCollider2D>();
-
+        correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
+        currentMonster = BigMom.ENC.BufferMonster;
     }
 
 
@@ -79,6 +91,7 @@ public class UsualClickerController : MonoBehaviour {
 
     public void KillMonster()
     {
+        
         Destroy(Monster);
     }
 
@@ -91,8 +104,11 @@ public class UsualClickerController : MonoBehaviour {
         {
 
             _clickStrength = ((BASE_HEALTH_DECREESE_COEFICIENT + Random.Range(0.01f, 0.50f))* CalculateCritChanse()) / Random.Range(0.5f+ (BigMom.ENC._scoreCounter + 1f)/5f,1.4f + (BigMom.ENC._scoreCounter + 1f) / 5f)   ;
-            Debug.Log(_clickStrength);
+            _clickStrength = _clickStrength * correctiveHitStrangth; 
+         //   Debug.Log(_clickStrength);
+            Debug.Log(correctiveHitStrangth);
             _healthObjLockalScaleX -= _clickStrength;
+
 
             _healthBar.transform.localScale = new Vector3(_healthObjLockalScaleX, 1f, 1f);  
             BigMom.ENC.UpdateScore(); // we really need this?
@@ -101,22 +117,55 @@ public class UsualClickerController : MonoBehaviour {
 
         if (_healthObjLockalScaleX <= 0)
         {
-
-            BigMom.ENC.StartCorutineOutside();
+            BigMom.ENC.countAliveMonsters--;
+            if (BigMom.ENC.countAliveMonsters <= 0)
+            {
+                BigMom.ENC.StartCorutineOutside();
+            }
             KillMonster();
-
+            BigMom.ENC._scoreCounter++;
         }
             
 
-        Debug.Log(_healthObjLockalScaleX);
+      //  Debug.Log(_healthObjLockalScaleX);
     }
+
+
+    public void FastTime()
+        {
+        BigMom.GC.timeDecreaseCoeficient = 0.35f;
+        }
+
+    public void goToUsualSettings()
+    {
+        BigMom.GC.setNormalTimeDecrease();
+    }
+
 
     void Update()
     {
+        Debug.Log(currentMonster.TypeOfThisMonster.ToString());
+
+        if(currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater )
+        {
+            if (!stopFastDecreaseTime)
+            {
+                FastTime();
+            }
+            stopFastDecreaseTime = false;
+        }
+        //  else { goToUsualSettings(); }
+        if (stopFastDecreaseTime)
+        {
+            BigMom.GC.setNormalTimeDecrease();
+        }
         if (BigMom.GC.TimeIsOutLetsEndThisGame)
         {
-            KillMonster();
-            BigMom.GC.TimeIsOutLetsEndThisGame = false;         
+            
+                KillMonster();
+            if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
+            { stopFastDecreaseTime = true; }
+            BigMom.ENC.WaitingForDestroying();        
         }
     }
    

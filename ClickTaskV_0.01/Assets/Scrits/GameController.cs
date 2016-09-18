@@ -15,6 +15,11 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject _retryButton;
 
+    public float timeDecreaseCoeficient = 0.1f;
+
+
+    public float standartTimeDecreaseCoeficient = 0.1f;
+
     public bool TimeIsOutLetsEndThisGame = false;
 
     void Start()
@@ -25,22 +30,28 @@ public class GameController : MonoBehaviour {
         _retryButton.SetActive(false);
     }
 
+    public void setNormalTimeDecrease()
+    {
+      timeDecreaseCoeficient = 0.1f;
+    }
+
     private void TimeDecrease()
     {
-        
-        _healthTimeBar.sizeDelta = new Vector2(_healthTimeBar.sizeDelta.x - 0.1f, _healthTimeBar.sizeDelta.y);
+       // Debug.Log(BigMom.ENC.timeDecreaseCoeficient.ToString());
+      //  timeDecreaseCoeficient = 5.0f;
+        _healthTimeBar.sizeDelta = new Vector2(_healthTimeBar.sizeDelta.x - timeDecreaseCoeficient, _healthTimeBar.sizeDelta.y);
         EndGame();
     }
 
     public void StartGame()
     {
+        BigMom.ENC.DestroyAllMobs();
         _healthTimeBar.sizeDelta = _oldValueOfHealthBar;
         BigMom.ENC._scoreCounter = 0;
         InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
         _retryButton.SetActive(false);
-        BigMom.ENC.SpawnEnemy();
-
+        BigMom.ENC.SpawnMonstersAfterDeath();        
     }
 
 
@@ -53,6 +64,9 @@ public class GameController : MonoBehaviour {
             TimeIsOutLetsEndThisGame = true;
             _timeIsOut.SetActive(true);
             _retryButton.SetActive(true);
+            
+                
+            
         }
     }
 	
