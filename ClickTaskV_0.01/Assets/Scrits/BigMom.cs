@@ -20,6 +20,11 @@ public static class BigMom
     /// <summary>
     /// Enviroment Controller
     /// </summary>
+
+    public static HealingMonster HM;
+
+    public static MonstersBasicClass MBC;
+
     public static EnemyController ENC;
 
     public static UsualClickerController UCC;
@@ -28,8 +33,8 @@ public static class BigMom
 
     public static void Init()
     {
-
-
+        HM = GameObject.FindObjectOfType<HealingMonster>();
+        MBC = GameObject.FindObjectOfType<MonstersBasicClass>();
         ENC = GameObject.FindObjectOfType<EnemyController>();
         UCC = GameObject.FindObjectOfType<UsualClickerController>();
         GC = GameObject.FindObjectOfType<GameController>();
