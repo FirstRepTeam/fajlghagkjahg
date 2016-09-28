@@ -34,6 +34,10 @@ public class MonstersBasicClass : MonoBehaviour {
     public GameObject monsterBody;
     public MonstersBasicClass currentMonster;
 
+    public float CurrentHealth ;
+    public float BasicHealth;
+    
+
     public void initMonster(MonsterType _monsterType, Vector3 _spawnSpotNumber, MonstersBasicClass curmon )
     {
         //  ClickStrengthCorrectiveVector = _monsterHealthCorrectiveValue;
@@ -68,6 +72,10 @@ public class MonstersBasicClass : MonoBehaviour {
                 break;
         }          
     }
+
+    
+    
+
 
 
 

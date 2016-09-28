@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
-
+using UnityEngine.Events;
 
 
 public class EnemyController : MonoBehaviour {
@@ -17,11 +17,16 @@ public class EnemyController : MonoBehaviour {
     public int countAliveMonsters = 0;
 
     [HideInInspector]
+    public bool isHealerOnAMap=false;
+
+    [HideInInspector]
     public float ClickStrengthCorrective = 1.0f;
 
     private List<Vector3> _spwnPointsList = new List<Vector3>();
     private List<MonstersBasicClass> _MonstersList = new List<MonstersBasicClass>();
-    private List<MonstersBasicClass> _UsedMonstersList = new List<MonstersBasicClass>();
+
+    [HideInInspector]
+    public List<MonstersBasicClass> UsedMonstersList = new List<MonstersBasicClass>();
 
     public MonstersBasicClass BasicMonster;
     private List<MonstersBasicClass.MonsterType> _monsterTypesList = new List<MonstersBasicClass.MonsterType>(); 
@@ -37,6 +42,8 @@ public class EnemyController : MonoBehaviour {
     public MonstersBasicClass CreatedMonster1;
     public MonstersBasicClass CreatedMonster2;
     public MonstersBasicClass CreatedMonster3;
+
+    public UnityEvent MonsterWasKilled_E;
 
     public float _scoreCounter = 0;
 
@@ -176,7 +183,7 @@ public class EnemyController : MonoBehaviour {
         for (int i = 0; i < MV; i++)
         {
             current_monster = GetRandomMonsterAndRemove(_MonstersList);
-            _UsedMonstersList.Add(current_monster);
+         //  _UsedMonstersList.Add(current_monster);
            
             yield return new WaitForSeconds(0.1f);
             Instantiate(current_monster.monsterBody, current_monster.spawnSlot, Quaternion.identity);
