@@ -53,6 +53,7 @@ public class UsualClickerController : MonoBehaviour {
         checkMonsterType();
         BigMom.ENC.MonsterWasKilled_E.AddListener(checkMonsterType);
         currentMonster.BasicHealth = _healthbarMaxValue;
+        currentMonster.CurrentHealth = currentMonster.BasicHealth;
     }
 
 
@@ -101,7 +102,10 @@ public class UsualClickerController : MonoBehaviour {
         if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Healer)
         {
             BigMom.ENC.isHealerOnAMap = false;
-        }       
+        }
+        if(currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
+        BigMom.PP.setNormalTimeDecrease();
+
         Destroy(Monster, 0.0f);
         StartCoroutine(WaitAfterDeath());
 
@@ -116,62 +120,24 @@ public class UsualClickerController : MonoBehaviour {
     private void StartHealingCast()
     { }
 
-    private void HealingSpellLogic()
-    {
-        if (BigMom.ENC.isHealerOnAMap)
-        {
-            if (CurrentHealColdown < 0)
-
-            {
-                if (currentMonster.CurrentHealth < currentMonster.BasicHealth/2f)
-                {
-                    
-                }
-  
-          }
-
-
-
-        }
-    }
+   
 
 
     private void ongoingProcesses()
     {
-        currentMonster.CurrentHealth = _healthObjLockalScaleX;
+        //   currentMonster.CurrentHealth = _healthObjLockalScaleX;
+        if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
+        {
+            currentMonster.FastTime();
+            }
+            _healthBar.transform.localScale = new Vector3(currentMonster.CurrentHealth, 1f, 1f);
     }
 
 
 
-    private void HealDamagedTarget()
-    {
+    
 
-        if (BigMom.ENC.isHealerOnAMap)
-        {
-           
-        }
-
-
-
-        if (_healthObjLockalScaleX < _healthbarMaxValue/2)
-        {
-         MonstersBasicClass randomMob =   BigMom.ENC.UsedMonstersList[Random.Range(1, BigMom.ENC.UsedMonstersList.Count)];
-
-        }
-    }
-
-    private void HealingAura()
-    {
-        if (BigMom.ENC.isHealerOnAMap && _healthObjLockalScaleX < _healthbarMaxValue && currentMonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer)
-        {
-           
-            _healthObjLockalScaleX += 1f *Time.deltaTime;
-
-
-            _healthBar.transform.localScale = new Vector3(_healthObjLockalScaleX, 1f, 1f);
-        }
-
-    }
+    
 
 
     public void OnMouseDown() 
@@ -179,22 +145,22 @@ public class UsualClickerController : MonoBehaviour {
 
         Instantiate(Scars, getScarsRandomPosition(), getScarsRandomRotation());
 
-        if (_healthObjLockalScaleX > 0)
+        if (currentMonster.CurrentHealth > 0)
         {
 
            
             _clickStrength = BigMom.PP.CalculateHit();
          //   Debug.Log(_clickStrength);
             Debug.Log(correctiveHitStrangth);
-            _healthObjLockalScaleX -= _clickStrength;
+            currentMonster.CurrentHealth -= _clickStrength;
 
 
-            _healthBar.transform.localScale = new Vector3(_healthObjLockalScaleX, 1f, 1f);  
+            _healthBar.transform.localScale = new Vector3(currentMonster.CurrentHealth, 1f, 1f);  
             BigMom.ENC.UpdateScore(); // we really need this?
 
         }
 
-        if (_healthObjLockalScaleX <= 0)
+        if (currentMonster.CurrentHealth <= 0)
         {
             BigMom.ENC.countAliveMonsters--;
             if (BigMom.ENC.countAliveMonsters <= 0)
@@ -210,36 +176,18 @@ public class UsualClickerController : MonoBehaviour {
     }
 
 
-    public void FastTime()
-        {
-        BigMom.PP.timeDecreaseCoeficient = 0.35f;
-        }
-
-    public void goToUsualSettings()
-    {
-        BigMom.PP.setNormalTimeDecrease();
-    }
+    
 
 
     void Update()
     {
         Debug.Log(currentMonster.TypeOfThisMonster.ToString());
+        ongoingProcesses();
+        // HealingAura();
+        currentMonster.HealingAura(currentMonster);
 
-        HealingAura();
-
-        if(currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater )
-        {
-            if (!stopFastDecreaseTime)
-            {
-                FastTime();
-            }
-            stopFastDecreaseTime = false;
-        }
         //  else { goToUsualSettings(); }
-        if (stopFastDecreaseTime)
-        {
-            BigMom.PP.setNormalTimeDecrease();
-        }
+       
         if (BigMom.GC.TimeIsOutLetsEndThisGame)
         {
             
@@ -250,7 +198,7 @@ public class UsualClickerController : MonoBehaviour {
         }
 
         CurrentHealColdown -= Time.deltaTime;
-        ongoingProcesses();
+        
 
 
 

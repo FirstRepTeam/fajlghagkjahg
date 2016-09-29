@@ -73,10 +73,63 @@ public class MonstersBasicClass : MonoBehaviour {
         }          
     }
 
-    
-    
+    /*
+     *  private void HealingSpellLogic()
+    {
+        if (BigMom.ENC.isHealerOnAMap)
+        {
+            if (CurrentHealColdown < 0)
+
+            {
+                if (currentMonster.CurrentHealth < currentMonster.BasicHealth/2f)
+                {
+                    
+                }
+  
+          }
 
 
+
+        }
+    }
+
+        private void HealDamagedTarget()
+    {
+
+        if (BigMom.ENC.isHealerOnAMap)
+        {
+           
+        }
+
+
+
+        if (_healthObjLockalScaleX < _healthbarMaxValue/2)
+        {
+         MonstersBasicClass randomMob =   BigMom.ENC.UsedMonstersList[Random.Range(1, BigMom.ENC.UsedMonstersList.Count)];
+
+        }
+    }
+     * */
+
+
+    public void FastTime()
+    {
+        BigMom.PP.timeDecreaseCoeficient = 0.35f;
+    }
+
+
+    public void HealingAura(MonstersBasicClass curmonster)
+    {
+        if (BigMom.ENC.isHealerOnAMap && curmonster.CurrentHealth < curmonster.BasicHealth && curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer)
+        {
+
+            curmonster.CurrentHealth += 1f * Time.deltaTime;
+
+
+            
+        }
+
+    }
 
 
     void Update()
