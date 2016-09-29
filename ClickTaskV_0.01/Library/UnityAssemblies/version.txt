@@ -1,6 +1,6 @@
-5.4.0f3:2.2.0.0
+5.4.0f3:2.3.0.0
 StandaloneWindows
-D:/5.4 юнити/Editor/Data/Managed/UnityEngine.dll
-D:/5.4 юнити/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
-D:/5.4 юнити/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
-D:/5.4 юнити/Editor/Data/Managed/UnityEditor.dll
+D:/Unity 5.4/Editor/Data/Managed/UnityEngine.dll
+D:/Unity 5.4/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
+D:/Unity 5.4/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
+D:/Unity 5.4/Editor/Data/Managed/UnityEditor.dll
