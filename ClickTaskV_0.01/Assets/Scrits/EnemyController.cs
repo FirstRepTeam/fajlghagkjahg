@@ -102,7 +102,7 @@ public class EnemyController : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
         BigMom.GC.TimeIsOutLetsEndThisGame = false;
-        //ggggg
+   
 
     }
     public void SpawnMonstersAfterDeath()

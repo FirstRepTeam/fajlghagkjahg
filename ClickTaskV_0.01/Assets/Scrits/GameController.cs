@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject _retryButton;
 
-    public float timeDecreaseCoeficient = 0.1f;
+    
 
 
     public float standartTimeDecreaseCoeficient = 0.1f;
@@ -30,16 +30,13 @@ public class GameController : MonoBehaviour {
         _retryButton.SetActive(false);
     }
 
-    public void setNormalTimeDecrease()
-    {
-      timeDecreaseCoeficient = 0.1f;
-    }
+    
 
     private void TimeDecrease()
     {
        // Debug.Log(BigMom.ENC.timeDecreaseCoeficient.ToString());
       //  timeDecreaseCoeficient = 5.0f;
-        _healthTimeBar.sizeDelta = new Vector2(_healthTimeBar.sizeDelta.x - timeDecreaseCoeficient, _healthTimeBar.sizeDelta.y);
+        _healthTimeBar.sizeDelta = new Vector2(_healthTimeBar.sizeDelta.x - BigMom.PP.CalculateTimeDecrease(), _healthTimeBar.sizeDelta.y);
         EndGame();
     }
 

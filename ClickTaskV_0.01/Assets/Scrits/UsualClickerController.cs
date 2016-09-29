@@ -57,20 +57,7 @@ public class UsualClickerController : MonoBehaviour {
 
 
 
-    private float CalculateCritChanse()
-    {
-
-        if (Random.Range(1f, 100f)* critChanse > 99)
-            return 4.0f;
-        else if (Random.Range(1f, 100f)* critChanse > 98)
-            return 3.0f;
-        else if (Random.Range(1f, 100f)* critChanse > 97)
-            return 2.0f;
-        else
-            return 1.0f;
-
-        
-    }
+   
 
     public Vector3 getScarsRandomPosition()
     {
@@ -195,8 +182,8 @@ public class UsualClickerController : MonoBehaviour {
         if (_healthObjLockalScaleX > 0)
         {
 
-            _clickStrength = ((BASE_HEALTH_DECREESE_COEFICIENT + Random.Range(0.01f, 0.50f))* CalculateCritChanse()) / Random.Range(0.5f+ (BigMom.ENC._scoreCounter + 1f)/5f,1.4f + (BigMom.ENC._scoreCounter + 1f) / 5f)   ;
-            _clickStrength = _clickStrength * correctiveHitStrangth; 
+           
+            _clickStrength = BigMom.PP.CalculateHit();
          //   Debug.Log(_clickStrength);
             Debug.Log(correctiveHitStrangth);
             _healthObjLockalScaleX -= _clickStrength;
@@ -225,12 +212,12 @@ public class UsualClickerController : MonoBehaviour {
 
     public void FastTime()
         {
-        BigMom.GC.timeDecreaseCoeficient = 0.35f;
+        BigMom.PP.timeDecreaseCoeficient = 0.35f;
         }
 
     public void goToUsualSettings()
     {
-        BigMom.GC.setNormalTimeDecrease();
+        BigMom.PP.setNormalTimeDecrease();
     }
 
 
@@ -251,7 +238,7 @@ public class UsualClickerController : MonoBehaviour {
         //  else { goToUsualSettings(); }
         if (stopFastDecreaseTime)
         {
-            BigMom.GC.setNormalTimeDecrease();
+            BigMom.PP.setNormalTimeDecrease();
         }
         if (BigMom.GC.TimeIsOutLetsEndThisGame)
         {
