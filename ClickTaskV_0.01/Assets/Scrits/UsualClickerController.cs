@@ -50,8 +50,8 @@ public class UsualClickerController : MonoBehaviour {
         correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
         currentMonster = BigMom.ENC.BufferMonster;
         BigMom.ENC.UsedMonstersList.Add(currentMonster);
-        checkMonsterType();
-        BigMom.ENC.MonsterWasKilled_E.AddListener(checkMonsterType);
+      //  checkMonsterType();
+      //  BigMom.ENC.MonsterWasKilled_E.AddListener(checkMonsterType);
         currentMonster.BasicHealth = _healthbarMaxValue;
         currentMonster.CurrentHealth = currentMonster.BasicHealth;
     }
@@ -63,8 +63,8 @@ public class UsualClickerController : MonoBehaviour {
     public Vector3 getScarsRandomPosition()
     {
        Vector3 ScarPosition =  _monsterHitbox.transform.position;
-        float randomX = Random.Range(-BigMom.ENC._monsterHitbox.size.x/3.0f, BigMom.ENC._monsterHitbox.size.x / 3.0f);
-        float randomY = Random.Range(-BigMom.ENC._monsterHitbox.size.y / 2.0f, BigMom.ENC._monsterHitbox.size.y / 6.0f);
+        float randomX = Random.Range(-BigMom.ENC._monsterHitbox.size.x * 0.1f, BigMom.ENC._monsterHitbox.size.x * 0.1f);
+        float randomY = Random.Range(-BigMom.ENC._monsterHitbox.size.y * 0.5f, BigMom.ENC._monsterHitbox.size.y * 0.1f);
 
         ScarPosition = new Vector3(
             ScarPosition.x + randomX,
@@ -87,11 +87,17 @@ public class UsualClickerController : MonoBehaviour {
     }
 
 
+   
+
     private void checkMonsterType ()
     {
         if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Healer)
         {
-            BigMom.ENC.isHealerOnAMap = true;
+        //    BigMom.ENC.isHealerOnAMap = true;
+        }
+      
+        if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Armored) {
+       //     BigMom.ENC.isArmorBufferOnAMap = true;
         }
     }
 
@@ -99,13 +105,21 @@ public class UsualClickerController : MonoBehaviour {
     {
         
         BigMom.ENC.UsedMonstersList.Remove(currentMonster);
+        // checkMonsterType();
+
+        
+        if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
+        BigMom.PP.setNormalTimeDecrease();
+
         if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Healer)
         {
             BigMom.ENC.isHealerOnAMap = false;
         }
-        if(currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
-        BigMom.PP.setNormalTimeDecrease();
 
+        if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Armored)
+        {
+            BigMom.ENC.isArmorBufferOnAMap = false;
+        }
         Destroy(Monster, 0.0f);
         StartCoroutine(WaitAfterDeath());
 
@@ -114,7 +128,9 @@ public class UsualClickerController : MonoBehaviour {
     IEnumerator  WaitAfterDeath()
     {
         yield return new WaitForSeconds(0.1f);
-        BigMom.ENC.MonsterWasKilled_E.Invoke();
+     //   BigMom.ENC.MonsterWasKilled_E.Invoke();
+      //  checkMonsterType();
+
     }
 
     private void StartHealingCast()
@@ -126,6 +142,7 @@ public class UsualClickerController : MonoBehaviour {
     private void ongoingProcesses()
     {
         //   currentMonster.CurrentHealth = _healthObjLockalScaleX;
+       // checkMonsterType();
         if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
         {
             currentMonster.FastTime();
@@ -149,9 +166,9 @@ public class UsualClickerController : MonoBehaviour {
         {
 
            
-            _clickStrength = BigMom.PP.CalculateHit();
+            _clickStrength = BigMom.PP.CalculateHit(currentMonster);
          //   Debug.Log(_clickStrength);
-            Debug.Log(correctiveHitStrangth);
+            Debug.Log(currentMonster.ClickStrengthCorrectiveVector);
             currentMonster.CurrentHealth -= _clickStrength;
 
 
@@ -178,16 +195,19 @@ public class UsualClickerController : MonoBehaviour {
 
     
 
-
     void Update()
     {
         Debug.Log(currentMonster.TypeOfThisMonster.ToString());
         ongoingProcesses();
         // HealingAura();
+        currentMonster.ArmoredBuff(currentMonster);
+        currentMonster.SpellColdown(currentMonster);
+        currentMonster.HealCastTimeCountdown(currentMonster);
         currentMonster.HealingAura(currentMonster);
+        currentMonster.StartHealCast(currentMonster);
 
         //  else { goToUsualSettings(); }
-       
+
         if (BigMom.GC.TimeIsOutLetsEndThisGame)
         {
             

@@ -4,8 +4,11 @@ using UnityEngine.UI;
 public class PlayerParametrs : MonoBehaviour {
 
 
-
+    [HideInInspector]
     public float timeDecreaseCoeficient = 0.1f;
+
+    [HideInInspector]
+    public float HitDecreaseCoefForSpell = 1f;
 
     private const float BASE_HEALTH_DECREESE_COEFICIENT = 0.01f;
     private float _clickStrength;
@@ -58,11 +61,13 @@ public class PlayerParametrs : MonoBehaviour {
         return timeDecreaseCoeficient;
     }
 
-    public float CalculateHit()
+    public float CalculateHit(MonstersBasicClass monster)
     {
         _clickStrength = ((BASE_HEALTH_DECREESE_COEFICIENT + Random.Range(0.01f, 0.50f)) * CalculateCritChanse()) / Random.Range(0.5f + (BigMom.ENC._scoreCounter + 1f) / 5f, 1.4f + (BigMom.ENC._scoreCounter + 1f) / 5f);
-        _clickStrength = _clickStrength * correctiveHitStrangth;
+        _clickStrength = _clickStrength * monster.ClickStrengthCorrectiveVector * HitDecreaseCoefForSpell;
+        Debug.Log(monster.ClickStrengthCorrectiveVector.ToString());
         return _clickStrength;
+        
     }
 
     private float CalculateCritChanse()

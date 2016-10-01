@@ -12,12 +12,17 @@ public class EnemyController : MonoBehaviour {
     public GameObject spawnSpot1 ;
     public GameObject spawnSpot2 ;
     public GameObject spawnSpot3 ;
+    public GameObject spawnSpot4 ;
+    public GameObject spawnSpot5 ;
     public float timeDecreaseCoeficient = 0.1f;
     [HideInInspector]
     public int countAliveMonsters = 0;
 
     [HideInInspector]
     public bool isHealerOnAMap=false;
+
+    [HideInInspector]
+    public bool isArmorBufferOnAMap = false;
 
     [HideInInspector]
     public float ClickStrengthCorrective = 1.0f;
@@ -38,6 +43,8 @@ public class EnemyController : MonoBehaviour {
     private MonstersBasicClass monster1 ;
     private MonstersBasicClass monster2;
     private MonstersBasicClass monster3;
+    private MonstersBasicClass monster4;
+    private MonstersBasicClass monster5;
 
     public MonstersBasicClass CreatedMonster1;
     public MonstersBasicClass CreatedMonster2;
@@ -59,26 +66,30 @@ public class EnemyController : MonoBehaviour {
         _spwnPointsList.Add(spawnSpot1.transform.position);
         _spwnPointsList.Add(spawnSpot2.transform.position);
         _spwnPointsList.Add(spawnSpot3.transform.position);
-
-        
+        _spwnPointsList.Add(spawnSpot4.transform.position);
+        _spwnPointsList.Add(spawnSpot5.transform.position);
 
 
         monster1 = new MonstersBasicClass();
         monster2 = new MonstersBasicClass();
         monster3 = new MonstersBasicClass();
+        monster4 = new MonstersBasicClass();
+        monster5 = new MonstersBasicClass();
+
         _monsterTypesList = BigMom.MBC.MonsterTypesList;
         initMonsters();
 
         _MonstersList.Add(monster1);
         _MonstersList.Add(monster2);
         _MonstersList.Add(monster3);
+        _MonstersList.Add(monster4);
+        _MonstersList.Add(monster5);
 
-        
-        
+
         _monsterHitbox = Monster.GetComponent<BoxCollider2D>();
       //  SpawnEnemy();
         _topScoreText.text = "BestScore: " + PlayerPrefs.GetFloat("BestScore").ToString();
-        int randomInt = UnityEngine.Random.Range(1, 3);
+        int randomInt = UnityEngine.Random.Range(1, 5);
         countAliveMonsters = randomInt;
           SpwnMonsters(countAliveMonsters);
         
@@ -92,6 +103,8 @@ public class EnemyController : MonoBehaviour {
         Destroy(monster1);
         Destroy(monster2);
         Destroy(monster3);
+        Destroy(monster4);
+        Destroy(monster5);
     }
 
     public void WaitingForDestroying (){
@@ -114,10 +127,15 @@ public class EnemyController : MonoBehaviour {
         _spwnPointsList.Add(spawnSpot1.transform.position);
         _spwnPointsList.Add(spawnSpot2.transform.position);
         _spwnPointsList.Add(spawnSpot3.transform.position);
+        _spwnPointsList.Add(spawnSpot4.transform.position);
+        _spwnPointsList.Add(spawnSpot5.transform.position);
 
         monster1 = new MonstersBasicClass();
         monster2 = new MonstersBasicClass();
         monster3 = new MonstersBasicClass();
+        monster4 = new MonstersBasicClass();
+        monster5 = new MonstersBasicClass();
+
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.Armored);
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.Healer);
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.TimeEater);
@@ -130,18 +148,21 @@ public class EnemyController : MonoBehaviour {
         _MonstersList.Add(monster1);
         _MonstersList.Add(monster2);
         _MonstersList.Add(monster3);
+        _MonstersList.Add(monster4);
+        _MonstersList.Add(monster5);
 
-
-        countAliveMonsters = UnityEngine.Random.Range(1, 3);
+        countAliveMonsters = UnityEngine.Random.Range(1, 5);
         SpwnMonsters(countAliveMonsters);
     }
 
 
     public void initMonsters()
     {
-        BigMom.MBC.initMonster(GetRandomMonsterTypeAndRemove(_monsterTypesList), choseRandomSpawnSpot(), monster1);
-        BigMom.MBC.initMonster(GetRandomMonsterTypeAndRemove(_monsterTypesList), choseRandomSpawnSpot(), monster2);
-        BigMom.MBC.initMonster(GetRandomMonsterTypeAndRemove(_monsterTypesList), choseRandomSpawnSpot(), monster3);
+        BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster1);
+        BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster2);
+        BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster3);
+        BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster4);
+        BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster5);
     }
 
     public Vector3 GetRandmSpawnPointAndRemove(List<Vector3> list)
@@ -153,11 +174,11 @@ public class EnemyController : MonoBehaviour {
     }
 
 
-    public MonstersBasicClass.MonsterType GetRandomMonsterTypeAndRemove(List<MonstersBasicClass.MonsterType> list )
+    public MonstersBasicClass.MonsterType GetRandomMonsterType(List<MonstersBasicClass.MonsterType> list )
     {
         int randomID = UnityEngine.Random.Range(0, list.Count);
         MonstersBasicClass.MonsterType  RandomMonsterType = list[randomID];
-        list.RemoveAt(randomID);
+      //  list.RemoveAt(randomID);
         return RandomMonsterType;
     }
 
@@ -220,8 +241,8 @@ public class EnemyController : MonoBehaviour {
 
 
           MonsterPosition.x,
-          MonsterPosition.y + _monsterHitbox.size.y / 1.5f,
-          MonsterPosition.z
+          MonsterPosition.y + _monsterHitbox.size.y * 0.4f,
+        MonsterPosition.z
   );
         return MonsterPosition;
     }

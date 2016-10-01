@@ -25,6 +25,10 @@ public class MonstersBasicClass : MonoBehaviour {
 
     [HideInInspector]
     public  float ClickStrengthCorrectiveVector;
+
+    [HideInInspector]
+    public float SaveClickStrengthCorrectiveVector;
+
     // public  string TypeOfMonster;
     [HideInInspector]
     public Vector3 spawnSlot;
@@ -36,7 +40,11 @@ public class MonstersBasicClass : MonoBehaviour {
 
     public float CurrentHealth ;
     public float BasicHealth;
-    
+
+    public float HealColdown = 0f;
+    public float HealCastTime = 0f;
+
+    public bool StartHealCastSpelCountdown = false;
 
     public void initMonster(MonsterType _monsterType, Vector3 _spawnSpotNumber, MonstersBasicClass curmon )
     {
@@ -48,15 +56,17 @@ public class MonstersBasicClass : MonoBehaviour {
         //  monsterBody = _monsterBody;
         attachBodyToMonster(curmon);
         
+        
+
     }
 
     private void attachBodyToMonster(MonstersBasicClass curmon)
     {
-        switch (TypeOfThisMonster)
+        switch (curmon.TypeOfThisMonster)
         {
             case (MonsterType.Armored):
                curmon.monsterBody = ArmoredBody;
-                curmon.ClickStrengthCorrectiveVector = 0.6f;
+                curmon.ClickStrengthCorrectiveVector = 1f;
                 break;
             case (MonsterType.Healer):
                 curmon.monsterBody = HealerBody;
@@ -64,13 +74,14 @@ public class MonstersBasicClass : MonoBehaviour {
                 break;
             case (MonsterType.TimeEater):
                 curmon.monsterBody = TimeEaterBody;
-                curmon.ClickStrengthCorrectiveVector = 1.2f;
+                curmon.ClickStrengthCorrectiveVector = 1.5f;
                 break;
             case (MonsterType.Usual):
                 curmon.monsterBody = UsualBody;
-                curmon.ClickStrengthCorrectiveVector = 1f;
+                curmon.ClickStrengthCorrectiveVector = 0.6f;
                 break;
-        }          
+        }
+        curmon.SaveClickStrengthCorrectiveVector = curmon.ClickStrengthCorrectiveVector;      
     }
 
     /*
@@ -117,6 +128,36 @@ public class MonstersBasicClass : MonoBehaviour {
         BigMom.PP.timeDecreaseCoeficient = 0.35f;
     }
 
+    private void checkExistingMonsterTypesInGame()
+    {
+        foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
+        {
+            if (mob.TypeOfThisMonster == MonsterType.Healer)
+            {
+                BigMom.ENC.isHealerOnAMap = true;
+            }
+            if (mob.TypeOfThisMonster == MonsterType.Armored)
+            {
+                BigMom.ENC.isArmorBufferOnAMap = true;
+            }
+        }
+    }
+
+
+
+
+    public void ArmoredBuff(MonstersBasicClass curmonster)
+    {
+        
+        if (BigMom.ENC.isArmorBufferOnAMap )
+        {
+            curmonster.ClickStrengthCorrectiveVector = 0.5f;
+        }
+        else
+        {
+           curmonster.ClickStrengthCorrectiveVector = curmonster.SaveClickStrengthCorrectiveVector;
+        }
+    }
 
     public void HealingAura(MonstersBasicClass curmonster)
     {
@@ -124,17 +165,105 @@ public class MonstersBasicClass : MonoBehaviour {
         {
 
             curmonster.CurrentHealth += 1f * Time.deltaTime;
+     
+        }
+
+    }
+
+    public void StartHealCast(MonstersBasicClass curmonster)
+    {
+        if (curmonster.TypeOfThisMonster == MonsterType.Healer && curmonster.HealColdown <=0 )
+        {
+            bool isSomebodyNeedToBeHealed = false;
+          foreach(MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
+            {
+                if (mob.CurrentHealth < mob.BasicHealth * 0.5f)
+                {
+                    isSomebodyNeedToBeHealed = true;
+                }
+            }
+            if (isSomebodyNeedToBeHealed)
+            {
+                curmonster.HealColdown = 10f;
+                isSomebodyNeedToBeHealed = false;
+                curmonster.HealCastTime = 4f;
+              curmonster.StartHealCastSpelCountdown = true;
+
+                Debug.Log("Neeed heal");
+             //   HealSomebody();
+                
+            }
 
 
-            
+          //  curmonster.CurrentHealth += 1f * Time.deltaTime;
+
         }
 
     }
 
 
+    public void HealSomedsfbody()
+    {
+    //    StartCoroutine(HealCourutine());
+    }
+
+    public void HealSomebody()
+    {
+        //    yield return new WaitForSeconds(0.5f);
+
+        Debug.Log("Im heled");
+        float lowestHealth = 1000f;
+        MonstersBasicClass weakestMonster = BigMom.ENC.UsedMonstersList[1];
+        foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
+        {
+            if (mob.CurrentHealth < lowestHealth)
+            {
+                lowestHealth = mob.CurrentHealth;
+                weakestMonster = mob;
+            }
+        }
+
+        if (weakestMonster.CurrentHealth < weakestMonster.BasicHealth)
+        {
+
+            weakestMonster.CurrentHealth += weakestMonster.BasicHealth * 0.5f;
+
+        }
+
+        //  BigMom.GC.TimeIsOutLetsEndThisGame = false;
+
+    }
+
+
+    public void SpellColdown(MonstersBasicClass monstr)
+    {
+        monstr.HealColdown -= Time.deltaTime;
+        if (monstr.HealColdown < -100)
+        {
+            monstr.HealColdown = -1;
+        }
+    }
+
+    public void HealCastTimeCountdown (MonstersBasicClass monstr){
+       
+        if (monstr.StartHealCastSpelCountdown) {
+            monstr.HealCastTime -= Time.deltaTime;
+                if (monstr.HealCastTime < 0f)
+                {
+                monstr.StartHealCastSpelCountdown = false;
+                HealSomebody();
+                }
+        }
+    }
+
+
+
+
     void Update()
     {
-   
+        checkExistingMonsterTypesInGame();
+        //  HealCastTimeCountdown();
+        //  SpellColdown();
     }
 
   
