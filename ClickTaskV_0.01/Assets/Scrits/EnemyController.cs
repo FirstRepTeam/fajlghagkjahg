@@ -27,6 +27,9 @@ public class EnemyController : MonoBehaviour {
     [HideInInspector]
     public float ClickStrengthCorrective = 1.0f;
 
+
+    public List<MonstersBasicClass> HealersList = new List<MonstersBasicClass>();
+
     private List<Vector3> _spwnPointsList = new List<Vector3>();
     private List<MonstersBasicClass> _MonstersList = new List<MonstersBasicClass>();
 
@@ -46,11 +49,15 @@ public class EnemyController : MonoBehaviour {
     private MonstersBasicClass monster4;
     private MonstersBasicClass monster5;
 
+    [HideInInspector]
+    public MonstersBasicClass spelCastMonster;
+
+
     public MonstersBasicClass CreatedMonster1;
     public MonstersBasicClass CreatedMonster2;
     public MonstersBasicClass CreatedMonster3;
 
-    public UnityEvent MonsterWasKilled_E;
+    
 
     public float _scoreCounter = 0;
 
@@ -75,6 +82,7 @@ public class EnemyController : MonoBehaviour {
         monster3 = new MonstersBasicClass();
         monster4 = new MonstersBasicClass();
         monster5 = new MonstersBasicClass();
+        spelCastMonster = new MonstersBasicClass();
 
         _monsterTypesList = BigMom.MBC.MonsterTypesList;
         initMonsters();
@@ -135,6 +143,7 @@ public class EnemyController : MonoBehaviour {
         monster3 = new MonstersBasicClass();
         monster4 = new MonstersBasicClass();
         monster5 = new MonstersBasicClass();
+        spelCastMonster = new MonstersBasicClass();
 
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.Armored);
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.Healer);
@@ -163,6 +172,7 @@ public class EnemyController : MonoBehaviour {
         BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster3);
         BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster4);
         BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster5);
+        BigMom.MBC.initMonster(MonstersBasicClass.MonsterType.coldownCastObject, new Vector3(0,0,0), spelCastMonster);
     }
 
     public Vector3 GetRandmSpawnPointAndRemove(List<Vector3> list)
@@ -255,8 +265,8 @@ public class EnemyController : MonoBehaviour {
    public IEnumerator SpawnNewMonsterAfterDeath()
     {
 
-        _scoreCounter++;
-        UpdateScore();
+      //  _scoreCounter++;
+     //   UpdateScore();
         yield return new WaitForSeconds(1.0f);
 
         SpawnMonstersAfterDeath();

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine.Events;
 
 public class GameController : MonoBehaviour {
 
@@ -15,8 +18,14 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject _retryButton;
 
-    
 
+    [HideInInspector]
+    public UnityEvent MonsterReadyToBeHealed_E;
+
+    [HideInInspector]
+    public UnityEvent MonsterWasKilled_E;
+
+    
 
     public float standartTimeDecreaseCoeficient = 0.1f;
 
@@ -45,6 +54,7 @@ public class GameController : MonoBehaviour {
         BigMom.ENC.DestroyAllMobs();
         _healthTimeBar.sizeDelta = _oldValueOfHealthBar;
         BigMom.ENC._scoreCounter = 0;
+        BigMom.ENC.UpdateScore();
         InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
         _retryButton.SetActive(false);
