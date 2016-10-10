@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/clickScene.unity
+- path: Assets/Scenes/SceneDownloads.unity
   isLoaded: 1
   isActive: 1
