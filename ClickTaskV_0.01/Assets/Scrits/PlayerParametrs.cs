@@ -17,37 +17,7 @@ public class PlayerParametrs : MonoBehaviour {
 
     private float correctiveHitStrangth = 1.0f;
 
-    [SerializeField]
-    private Slider fireS, airS, waterS, earthS;
-    [SerializeField]
-    private Text fireT, airT, waterT, earthT;
-    [SerializeField]
-    private GameObject Skills;
 
-
-
-    public float CalculateSkills()
-    {
-        float damage = 0f;
-        damage = (fireS.value - waterS.value) +
-        (fireS.value + airS.value) +
-        (waterS.value + earthS.value) +
-        (earthS.value - airS.value);
-        return damage;
-    }
-
-
-    public void SkillsCount()
-    {
-        fireT.text = fireS.value.ToString();
-        airT.text = airS.value.ToString();
-        waterT.text = waterS.value.ToString();
-        earthT.text = earthS.value.ToString();
-    }
-    public void OnOffSkill()
-    {
-        Skills.SetActive(!Skills.activeSelf);
-    }
 
 
     public void setNormalTimeDecrease()
