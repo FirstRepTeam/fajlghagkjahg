@@ -44,6 +44,52 @@ public class MonstersBasicClass : MonoBehaviour {
     [HideInInspector]
     public bool AlreadyHealTarget = false;
 
+    [HideInInspector]
+    private float BaseHealthPoints = 100.0f;
+    [HideInInspector]
+    private float BaseDamage = 0.1f;
+    [HideInInspector]
+    private float BaseExpereance = 1.0f;
+    [HideInInspector]
+    private float BaseGold = 0.1f;
+    [HideInInspector]
+    private float BaseDropChanse = 1.0f;
+    [HideInInspector]
+    private float BaseArmor = 1.0f;
+    [HideInInspector]
+    private float BaseMagResist = 1.0f;
+
+
+    [HideInInspector]
+    public float HealthPoints;
+    [HideInInspector]
+    public float Damage;
+    [HideInInspector]
+    public float Expereance;
+    [HideInInspector]
+    public float Gold;
+    [HideInInspector]
+    public float DropChanse;
+    [HideInInspector]
+    public float Armor;
+    [HideInInspector]
+    public float MagResist;
+
+    [HideInInspector]
+    public float CorrectionHealthPoints;
+    [HideInInspector]
+    public float CorrectionDamage;
+    [HideInInspector]
+    public float CorrectionExpereance;
+    [HideInInspector]
+    public float CorrectionGold;
+    [HideInInspector]
+    public float CorrectionDropChanse;
+    [HideInInspector]
+    public float CorrectionArmor;
+    [HideInInspector]
+    public float CorrectionMagResist;
+
     public float CurrentHealth ;
     public float BasicHealth;
 
@@ -66,7 +112,7 @@ public class MonstersBasicClass : MonoBehaviour {
     public bool ColdownMonsterDestroted = false;
 
     [HideInInspector]
-    public MonstersBasicClass coldownMonster = null;
+    public MonstersBasicClass coldownMonster;
 
     [HideInInspector]
     public MonstersBasicClass healerMonsterForColdown;
@@ -104,6 +150,13 @@ public class MonstersBasicClass : MonoBehaviour {
             case (MonsterType.Armored):
                curmon.monsterBody = ArmoredBody;
                 curmon.ClickStrengthCorrectiveVector = 1f;
+               // CorrectionArmor =;
+               // CorrectionDamage;
+               // CorrectionDropChanse;
+               // CorrectionExpereance;
+               // CorrectionGold;
+               // CorrectionHealthPoints;
+
                 break;
             case (MonsterType.Healer):
                 curmon.monsterBody = HealerBody;
@@ -122,7 +175,14 @@ public class MonstersBasicClass : MonoBehaviour {
                 curmon.ClickStrengthCorrectiveVector = 10;
                 break;
         }
-        curmon.SaveClickStrengthCorrectiveVector = curmon.ClickStrengthCorrectiveVector;      
+        curmon.SaveClickStrengthCorrectiveVector = curmon.ClickStrengthCorrectiveVector;
+        HealthPoints = BaseHealthPoints;
+        Damage = BaseDamage;
+        Expereance = BaseExpereance;
+        DropChanse = BaseDropChanse;
+        Armor = BaseArmor;
+        Gold = BaseGold;
+        MagResist = BaseMagResist;   
     }
 
     /*
@@ -330,6 +390,14 @@ public class MonstersBasicClass : MonoBehaviour {
         else
         {
             Monster.HealColdown = -1f;
+        }
+    }
+
+    public void killCast(MonstersBasicClass monstr)
+    {
+       if (monstr.coldownMonster.TypeOfThisMonster == MonsterType.coldownCastObject)
+        {
+            monstr.coldownMonster.killmeNOW = true;
         }
     }
 
