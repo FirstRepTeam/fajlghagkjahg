@@ -78,7 +78,7 @@ public class UsualClickerController : MonoBehaviour {
         {
             BigMom.ENC.HealersList.Add(currentMonster);
         }
-        currentMonster.killmeNOW = false;
+      //  currentMonster.killmeNOW = false;
         
 
     }
@@ -152,7 +152,7 @@ public class UsualClickerController : MonoBehaviour {
         {
             BigMom.ENC.UsedMonstersList.Remove(currentMonster);
             // checkMonsterType();
-
+            
 
 
             if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
@@ -261,8 +261,9 @@ public class UsualClickerController : MonoBehaviour {
                 }
                 BigMom.ENC._scoreCounter++;
             }
-            KillMonster();
             
+            KillMonster();
+            BigMom.MBC.killCast(currentMonster);
         }
             
 
