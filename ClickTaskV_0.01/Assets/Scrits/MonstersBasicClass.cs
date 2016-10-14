@@ -45,7 +45,7 @@ public class MonstersBasicClass : MonoBehaviour {
     public bool AlreadyHealTarget = false;
 
     [HideInInspector]
-    private float BaseHealthPoints = 100.0f;
+    public float BaseHealthPoints;
     [HideInInspector]
     private float BaseDamage = 0.1f;
     [HideInInspector]
@@ -117,6 +117,11 @@ public class MonstersBasicClass : MonoBehaviour {
     [HideInInspector]
     public MonstersBasicClass healerMonsterForColdown;
 
+    void Start()
+    {
+
+    }
+
     private void onEnable()
     {
       //  BigMom.GC.MonsterWasKilled_E.AddListener(checkExistingMonsterTypesInGame);
@@ -137,8 +142,11 @@ public class MonstersBasicClass : MonoBehaviour {
 
         curmon.spawnSlot = _spawnSpotNumber;
         //  monsterBody = _monsterBody;
+      //  BaseHealthPoints = BigMom.PP._monsterHealth;
+        HealthPoints = BaseHealthPoints;
         attachBodyToMonster(curmon);
         
+       
         
 
     }
@@ -286,13 +294,13 @@ public class MonstersBasicClass : MonoBehaviour {
 
     public void HealingAura(MonstersBasicClass curmonster)
     {
-        
-        if (BigMom.ENC.isHealerOnAMap && curmonster.CurrentHealth <= curmonster.BasicHealth && curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer &&
+
+        if (BigMom.ENC.isHealerOnAMap && curmonster.HealthPoints <= curmonster.BaseHealthPoints && curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer &&
             curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
         {
             float HealAuraCoeficient = 1f;
            
-                curmonster.CurrentHealth += healersMonstersCount*HealAuraCoeficient * Time.deltaTime;
+                curmonster.HealthPoints += healersMonstersCount*HealAuraCoeficient * Time.deltaTime;
             
         }
 
@@ -305,7 +313,7 @@ public class MonstersBasicClass : MonoBehaviour {
             bool isSomebodyNeedToBeHealed = false;
           foreach(MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
             {
-                if (mob.CurrentHealth < mob.BasicHealth * 0.5f)
+                if (mob.HealthPoints < mob.BasicHealth * 0.5f)
                 {
                     isSomebodyNeedToBeHealed = true;
                 }
@@ -354,22 +362,22 @@ public class MonstersBasicClass : MonoBehaviour {
         MonstersBasicClass weakestMonster = BigMom.ENC.UsedMonstersList[0];
         foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
         {
-            if ( mob.CurrentHealth < lowestHealth)
+            if ( mob.HealthPoints < lowestHealth)
             {
-                lowestHealth = mob.CurrentHealth;
+                lowestHealth = mob.HealthPoints;
                 weakestMonster = mob;
             }
         }
 
-        if (weakestMonster.CurrentHealth < weakestMonster.BasicHealth)
+        if (weakestMonster.HealthPoints < weakestMonster.BasicHealth)
         {
             float healValue = weakestMonster.BasicHealth * 0.5f;
 
-            if (weakestMonster.CurrentHealth + healValue >= weakestMonster.BasicHealth)
+            if (weakestMonster.HealthPoints + healValue >= weakestMonster.BasicHealth)
             {
-                healValue = weakestMonster.CurrentHealth + healValue - weakestMonster.BasicHealth;
+                healValue = weakestMonster.HealthPoints + healValue - weakestMonster.BasicHealth;
             }
-            weakestMonster.CurrentHealth += healValue;
+            weakestMonster.HealthPoints += healValue;
           
         }
 
@@ -395,9 +403,13 @@ public class MonstersBasicClass : MonoBehaviour {
 
     public void killCast(MonstersBasicClass monstr)
     {
-       if (monstr.coldownMonster.TypeOfThisMonster == MonsterType.coldownCastObject)
+
+        if (monstr.coldownMonster != null)
         {
             monstr.coldownMonster.killmeNOW = true;
+         //   monstr.StartHealCastSpelCountdown = false;
+          //  HealSomebody();
+
         }
     }
 
@@ -428,7 +440,7 @@ public class MonstersBasicClass : MonoBehaviour {
 
             if (monstr.HealCastTime < 0f )
                 {
-                Debug.Log(monstr.coldownMonster.CurrentHealth);
+                Debug.Log(monstr.coldownMonster.HealthPoints);
                 if (monstr.coldownMonster.ColdownMonsterDestroted == true)
                 {
                     monstr.coldownMonster.killmeNOW = true;

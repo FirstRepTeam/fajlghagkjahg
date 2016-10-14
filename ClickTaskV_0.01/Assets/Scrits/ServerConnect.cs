@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
-using com.shephertz.app42.paas.sdk.csharp;
-using com.shephertz.app42.paas.sdk.csharp.user;
 using System;
 using UnityEngine.UI;
+using com.shephertz.app42.paas.sdk.csharp;
+using com.shephertz.app42.paas.sdk.csharp.user;
+
+
 public class ServerConnect: MonoBehaviour {
     public Text _inputLogin, _inputPassword, _inputMail;
 
@@ -39,5 +42,5 @@ public class UnityCallBack : App42CallBack
     {
         Debug.Log("Exception : " + e);
 
-    }
+    } 
 }

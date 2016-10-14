@@ -12,6 +12,9 @@ public class UsualClickerController : MonoBehaviour {
     [SerializeField]
     public GameObject _healthBar;
 
+    [SerializeField]
+    private  TextMesh _HealthText;
+
     private float  coldownBarVelue;
 
     
@@ -51,7 +54,7 @@ public class UsualClickerController : MonoBehaviour {
     void Start()
     {
      _healthObjLockalScaleX = _healthBar.transform.localScale.x;
-
+        
         if(ColdownBar!= null)
         coldownBarVelue = ColdownBar.transform.localScale.x;
 
@@ -67,10 +70,11 @@ public class UsualClickerController : MonoBehaviour {
         {
             currentMonster.ColdownMonsterDestroted = true;
         }
+        currentMonster.BaseHealthPoints = BigMom.PP._monsterHealth;
       //  checkMonsterType();
       // BigMom.ENC.MonsterWasKilled_E.AddListener(checkMonsterType);
-        currentMonster.BasicHealth = _healthbarMaxValue;
-        currentMonster.CurrentHealth = currentMonster.BasicHealth;
+       // currentMonster.BaseHealthPoints = _healthbarMaxValue;
+        currentMonster.HealthPoints = currentMonster.BaseHealthPoints;
         //  currentMonster.checkExistingMonsterTypesInGame();
         CheckMonstersTypesOnMapForEachExistingMonster();
 
@@ -206,13 +210,16 @@ public class UsualClickerController : MonoBehaviour {
         {
             currentMonster.FastTime();
             }
-            _healthBar.transform.localScale = new Vector3(currentMonster.CurrentHealth, 1f, 1f);
+        float converted_health = ((100 / currentMonster.BaseHealthPoints * currentMonster.HealthPoints) * MAX_SCALE_X_VALUE_FOR_HEALTHBAR) / 100;
+
+        _HealthText.text = currentMonster.HealthPoints.ToString() + "/" + currentMonster.BaseHealthPoints.ToString();
+            _healthBar.transform.localScale = new Vector3(converted_health, 1f, 1f);
         if (ColdownBar != null)
             ColdownBar.transform.localScale = new Vector3(currentMonster.couldownBarValue, 1f, 1f);
 
-     if(currentMonster.CurrentHealth > currentMonster.BasicHealth)
+     if(currentMonster.HealthPoints > currentMonster.BaseHealthPoints)
         {
-            currentMonster.CurrentHealth = currentMonster.BasicHealth;
+            currentMonster.HealthPoints = currentMonster.BaseHealthPoints;
         }
 
     }
@@ -235,22 +242,22 @@ public class UsualClickerController : MonoBehaviour {
 
         Instantiate(Scars, getScarsRandomPosition(), getScarsRandomRotation());
 
-        if (currentMonster.CurrentHealth > 0)
+        if (currentMonster.HealthPoints > 0)
         {
 
            
             _clickStrength = BigMom.PP.CalculateHit(currentMonster);
          //   Debug.Log(_clickStrength);
             Debug.Log(currentMonster.ClickStrengthCorrectiveVector);
-            currentMonster.CurrentHealth -= _clickStrength;
+            currentMonster.HealthPoints -= _clickStrength;
 
           
-            _healthBar.transform.localScale = new Vector3(currentMonster.CurrentHealth, 1f, 1f);  
+            _healthBar.transform.localScale = new Vector3(currentMonster.HealthPoints, 1f, 1f);  
           //  BigMom.ENC.UpdateScore(); // we really need this?
 
         }
-
-        if (currentMonster.CurrentHealth <= 0)
+        Debug.Log("XP = " + currentMonster.HealthPoints.ToString());
+        if (currentMonster.HealthPoints <= 0)
         {
             if (currentMonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
             {
@@ -283,7 +290,7 @@ public class UsualClickerController : MonoBehaviour {
         currentMonster.HealCastTimeCountdown(currentMonster);
         currentMonster.HealingAura(currentMonster);
 
-        if (currentMonster.CurrentHealth < currentMonster.BasicHealth * 0.5f)
+        if (currentMonster.HealthPoints < currentMonster.BaseHealthPoints * 0.5f)
         {
 
             currentMonster.catchMonstersAskAboutHeal(currentMonster) ;
