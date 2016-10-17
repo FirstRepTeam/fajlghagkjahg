@@ -1,0 +1,31 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class PlayerSpells : MonoBehaviour {
+
+	private float Coldown = 15f;
+    private float duration = 6f;
+
+    public GameObject rageSpell;
+
+    public void onRageSpellClick()
+    {
+        BigMom.PP.HitDecreaseCoefForSpell = 10f;
+        rageSpell.SetActive(false);
+        StartCoroutine(WaitForSpellColdownAndEnable());
+        StartCoroutine(WaitForSpellDurationThenOffEffects());
+    }
+
+    private IEnumerator WaitForSpellColdownAndEnable()
+    {
+        yield return new WaitForSeconds(Coldown);
+        rageSpell.SetActive(true);
+    }
+
+    private IEnumerator WaitForSpellDurationThenOffEffects()
+    {
+        yield return new WaitForSeconds(duration);
+        BigMom.PP.HitDecreaseCoefForSpell = 1f;
+    }
+
+}
