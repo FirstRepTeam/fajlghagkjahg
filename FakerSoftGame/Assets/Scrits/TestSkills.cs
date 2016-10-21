@@ -8,16 +8,16 @@ public class TestSkills : MonoBehaviour {
     private GameObject _skillsPanel;
 
     [SerializeField]
-    private int _forse, _sleight, _intellect, _stamina;
+    private int _streght, _agility, _intellect, _stamina;
 
     [SerializeField]
-    private Text _forceCounter, _sleightCounter, _intellectCounter, _staminaCounter, _countPointAbilities;
+    private Text _streghtCounter, _agilityCounter, _intellectCounter, _staminaCounter, _countPointAbilities;
 
     [SerializeField]
-    private Button _forcePlus, _sleightPlus, _intellectPlus, _staminaPlus;
+    private Button _strenghtPlus, _agilityPlus, _intellectPlus, _staminaPlus;
 
     [SerializeField]
-    private Button _forceMinus, _sleightMinus, _intellectMinus, _staminaMinus;
+    private Button _strenghtMinus, _agilityMinus, _intellectMinus, _staminaMinus;
 
 
     public void ShowPanelSkills()
@@ -26,28 +26,28 @@ public class TestSkills : MonoBehaviour {
     }
 
 
-    public void ForsePlus()
+    public void StrenghtPlus()
     {
-        if (int.Parse(_forceCounter.text) != 99)
+        if (int.Parse(_streghtCounter.text) != 99)
         {
-            string _string = _forceCounter.text;
+            string _string = _streghtCounter.text;
             int _index = 1 + int.Parse(_string);
-            _forceCounter.text = _index.ToString();
+            _streghtCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
-            BigMom.PP._strength = _integer;
+            BigMom.PP._power = _integer;
             BigMom.PP.CalulateParams();
         }
      
     }
 
-    public void SleightPlus()
+    public void AgilityPlus()
     {
-        if (int.Parse(_sleightCounter.text) != 99)
+        if (int.Parse(_agilityCounter.text) != 99)
         {
-            string _string = _sleightCounter.text;
+            string _string = _agilityCounter.text;
             int _index = 1 + int.Parse(_string);
-            _sleightCounter.text = _index.ToString();
+            _agilityCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._agility = _integer;
@@ -86,28 +86,28 @@ public class TestSkills : MonoBehaviour {
        
     }
 
-    public void ForseMinus()
+    public void StrenghtMinus()
     {
-        if (int.Parse(_forceCounter.text) != 0)
+        if (int.Parse(_streghtCounter.text) != 0)
         {
-            string _string = _forceCounter.text;
+            string _string = _streghtCounter.text;
             int _index = int.Parse(_string) - 1;
-            _forceCounter.text = _index.ToString();
+            _streghtCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
-            BigMom.PP._strength = _integer;
+            BigMom.PP._power = _integer;
             BigMom.PP.CalulateParams();
         }
         
     }
 
-    public void SleightMinus()
+    public void AgilityMinus()
     {
-        if (int.Parse(_sleightCounter.text) != 0)
+        if (int.Parse(_agilityCounter.text) != 0)
         {
-            string _string = _sleightCounter.text;
+            string _string = _agilityCounter.text;
             int _index = int.Parse(_string) - 1;
-            _sleightCounter.text = _index.ToString();
+            _agilityCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._agility = _integer;
@@ -127,6 +127,7 @@ public class TestSkills : MonoBehaviour {
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._intellect = _integer;
             BigMom.PP.CalulateParams();
+            
         }
        
     }
