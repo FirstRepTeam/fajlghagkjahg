@@ -58,6 +58,26 @@ public class UI : MonoBehaviour
     {
         _personPanel.SetActive(true);
         _tavernPanel.SetActive(false);
+        if (PlayerPrefs.HasKey("power"))
+        {
+            //  BigMom.PP._agility = int.Parse(_sleightCounter.text);
+
+            if (PlayerPrefs.HasKey("agility")) 
+            _sleightCounter.text = PlayerPrefs.GetInt("agility").ToString();
+
+            if (PlayerPrefs.HasKey("power")) 
+            _forceCounter.text = PlayerPrefs.GetInt("power").ToString();
+
+            if (PlayerPrefs.HasKey("intellect"))
+            _intellectCounter.text = PlayerPrefs.GetInt("intellect").ToString();
+
+            if (PlayerPrefs.HasKey("stamina")) 
+            _staminaCounter.text = PlayerPrefs.GetInt("stamina").ToString();
+            //  _power = PlayerPrefs.GetInt("power");
+            // _agility = PlayerPrefs.GetInt("agility");
+            // _intellect = PlayerPrefs.GetInt("intellect");
+            //_stamina = PlayerPrefs.GetInt("stamina");
+        }
     }
 
     public void AbilitiesSkills()
@@ -75,7 +95,14 @@ public class UI : MonoBehaviour
             _forceCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("power", _index);
         }
+       
+     //   _power = PlayerPrefs.GetInt("power");
+      //  _agility = PlayerPrefs.GetInt("agility");
+      //  _intellect = PlayerPrefs.GetInt("intellect");
+      //  _stamina = PlayerPrefs.GetInt("stamina");
+
     }
 
     public void SleightPlus()
@@ -87,6 +114,7 @@ public class UI : MonoBehaviour
             _sleightCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("agility", _index);
         }
     }
 
@@ -99,6 +127,7 @@ public class UI : MonoBehaviour
             _intellectCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("intellect", _index);
         }
     }
 
@@ -111,54 +140,59 @@ public class UI : MonoBehaviour
             _staminaCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("stamina", _index);
         }
     }
 
     public void ForseMinus()
     {
-        if (int.Parse(_forceCounter.text) != 0)
+        if (int.Parse(_forceCounter.text) > 10)
         {
             string _string = _forceCounter.text;
             int _index = int.Parse(_string) - 1;
             _forceCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("power", _index);
         }
     }
 
     public void SleightMinus()
     {
-        if (int.Parse(_sleightCounter.text) != 0)
+        if (int.Parse(_sleightCounter.text) > 10)
         {
             string _string = _sleightCounter.text;
             int _index = int.Parse(_string) - 1;
             _sleightCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("agility", _index);
         }
     }
 
     public void IntellectMinus()
     {
-        if (int.Parse(_intellectCounter.text) != 0)
+        if (int.Parse(_intellectCounter.text) > 10)
         {
             string _string = _intellectCounter.text;
             int _index = int.Parse(_string) - 1;
             _intellectCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("intellect", _index);
         }
     }
 
     public void StaminaMinus()
     {
-        if (int.Parse(_staminaCounter.text) != 0)
+        if (int.Parse(_staminaCounter.text) > 10)
         {
             string _string = _staminaCounter.text;
             int _index = int.Parse(_string) - 1;
             _staminaCounter.text = _index.ToString();
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
+            PlayerPrefs.SetInt("stamina", _index);
         }
     }
 }

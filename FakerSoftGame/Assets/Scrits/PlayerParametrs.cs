@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 public class PlayerParametrs : MonoBehaviour {
-    private float _monsterArmor=10;//10 percent
+    private float _monsterArmor= 0.1f;//10 percent
     private float _monsterMagicresist = 10;
 
   
@@ -46,7 +46,7 @@ public class PlayerParametrs : MonoBehaviour {
     public float _monsterHealth;
 
     [HideInInspector]
-    public float _clickDamage;
+    public float _clickDamage, _resistCoef;
 
     [HideInInspector]
     public float CurrentExp;
@@ -56,11 +56,19 @@ public class PlayerParametrs : MonoBehaviour {
     // calculated params
     void Start()
     {
-        _strengthCount.text = _power.ToString();
-        _sleightCount.text = _agility.ToString();
-        _intellectCount.text = _intellect.ToString();
-        _staminaCount.text = _stamina.ToString();
 
+        if (PlayerPrefs.HasKey("agility"))
+            _agility = PlayerPrefs.GetInt("agility");
+
+        if (PlayerPrefs.HasKey("power"))
+            _power = PlayerPrefs.GetInt("power");
+
+        if (PlayerPrefs.HasKey("intellect"))
+            _intellect = PlayerPrefs.GetInt("intellect");
+
+        if (PlayerPrefs.HasKey("stamina"))
+            _stamina = PlayerPrefs.GetInt("stamina");
+      
         CalulateParams();
     }
     void Update()
@@ -79,7 +87,7 @@ public class PlayerParametrs : MonoBehaviour {
         float _pointsSpendingPerPassive = _spendingStregth + _spendingAgility + _spendingIntellect + newPassiveSpending;
         float _koefB15 = (_power + _agility + _intellect + _stamina + _pointsSpendingPerPassive)/4;
         float _heroLevel = 1.0f; /// 1 + ((_strength + _agility + _intellect + _stamina) - 40) / LvL_Score;
-        float _expForLevel = 100 * (_heroLevel * _heroLevel);
+        float _expForLevel = 100 * (_heroLevel * _heroLevel);       //
         float _finalStateStrength = (_power + _clotheStrength) * _passiveModStrength;
         float _finalStateAgility = (_agility + _clotheAgility) * _passiveModAgility;
         float _finalStateIntellect = (_intellect + _clotheIntellect) * _passiveModintellect;
@@ -93,7 +101,7 @@ public class PlayerParametrs : MonoBehaviour {
         float _critStrengthCoef = 1.5f;
         float _skillPowercoef = _basicMultiplyMagicPower+(_finalStateIntellect/(_koefB15/(_SAICoef)));
         float _coldounSkillCoef = 1.0f;
-        float _resistCoef = _basicResistCoef + (_koefB15 / _finalStateStaina);
+        _resistCoef = _basicResistCoef + (_koefB15 / _finalStateStaina);
         //Monsters
         float _monsterDamageEffect = 1.0f - (_passiveLvlmagicArmor*0.05f);
         float _monsterDamage = ((1.0f + _expForLevel / 50.0f) / 2.0f) * _monsterDamageEffect;
@@ -121,12 +129,14 @@ public class PlayerParametrs : MonoBehaviour {
         return timeDecreaseCoeficient;
     }
 
-    public float CalculateHit(MonstersBasicClass monster)
+    public float CalculateHit(MonstersBasicClass monstr)
     {
-     //   _clickStrength = ((BASE_HEALTH_DECREESE_COEFICIENT + Random.Range(0.01f, 0.50f)) * CalculateCritChanse()) / Random.Range(0.5f + (BigMom.ENC._scoreCounter + 1f) / 5f, 1.4f + (BigMom.ENC._scoreCounter + 1f) / 5f);
-    //    _clickStrength = _clickStrength * monster.ClickStrengthCorrectiveVector * HitDecreaseCoefForSpell;
-    //    Debug.Log(monster.ClickStrengthCorrectiveVector.ToString());
-        return _clickDamage;
+        float final_damage = _clickDamage * monstr._coefArmor - (_clickDamage * monstr._coefArmor - _clickDamage * monstr._coefArmor * _monsterArmor);
+        //   _clickStrength = ((BASE_HEALTH_DECREESE_COEFICIENT + Random.Range(0.01f, 0.50f)) * CalculateCritChanse()) / Random.Range(0.5f + (BigMom.ENC._scoreCounter + 1f) / 5f, 1.4f + (BigMom.ENC._scoreCounter + 1f) / 5f);
+        //    _clickStrength = _clickStrength * monster.ClickStrengthCorrectiveVector * HitDecreaseCoefForSpell;
+        //    Debug.Log(monster.ClickStrengthCorrectiveVector.ToString());
+        Debug.Log("Basedamage " + monstr._coefArmor);
+        return final_damage;
         
     }
 

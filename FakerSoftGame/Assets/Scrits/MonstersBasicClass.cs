@@ -24,6 +24,19 @@ public class MonstersBasicClass : MonoBehaviour {
     public GameObject ColdownObjectBody;
 
 
+    public float _coefDamage;
+    public float _coefHealth;
+    public float _coefArmor;
+    public float _coefMagicResist;
+    public float _coefExperiance;
+    public float _coefDrop;
+    public float _coefGold;
+        
+
+
+
+
+
     [HideInInspector]
     public  float ClickStrengthCorrectiveVector;
 
@@ -63,7 +76,7 @@ public class MonstersBasicClass : MonoBehaviour {
     [HideInInspector]
     public float HealthPoints;
     [HideInInspector]
-    public float Damage;
+    public float Damage = 0;
     [HideInInspector]
     public float Expereance;
     [HideInInspector]
@@ -164,33 +177,70 @@ public class MonstersBasicClass : MonoBehaviour {
                // CorrectionExpereance;
                // CorrectionGold;
                // CorrectionHealthPoints;
+    _coefDamage = 0.8f;
+     _coefHealth = 1.5f;
+                curmon._coefArmor = 1.5f;
+     _coefMagicResist = 0.5f;
+     _coefExperiance = 2.0f;
+     _coefDrop = 2.0f;
+     _coefGold = 2.0f;
 
                 break;
             case (MonsterType.Healer):
                 curmon.monsterBody = HealerBody;
                 curmon.ClickStrengthCorrectiveVector = 1.5f;
+                _coefDamage = 0.5f;
+                _coefHealth = 0.8f;
+                curmon._coefArmor = 1.0f;
+                _coefMagicResist = 1.0f;
+                _coefExperiance = 2.0f;
+                _coefDrop = 2.0f;
+                _coefGold = 2.0f;
                 break;
             case (MonsterType.TimeEater):
                 curmon.monsterBody = TimeEaterBody;
                 curmon.ClickStrengthCorrectiveVector = 1.5f;
+                _coefDamage = 1.0f;
+                _coefHealth = 1.0f;
+                curmon._coefArmor = 1.0f;
+                _coefMagicResist = 1.0f;
+                _coefExperiance = 1.0f;
+                _coefDrop = 1.0f;
+                _coefGold = 1.0f;
                 break;
             case (MonsterType.Usual):
                 curmon.monsterBody = UsualBody;
                 curmon.ClickStrengthCorrectiveVector = 0.6f;
+                _coefDamage = 1.0f;
+                _coefHealth = 1.0f;
+                curmon._coefArmor = 1.0f;
+                _coefMagicResist = 1.0f;
+                _coefExperiance = 1.0f;
+                _coefDrop = 1.0f;
+                _coefGold = 1.0f;
                 break;
             case (MonsterType.coldownCastObject):
                 curmon.monsterBody = ColdownObjectBody;
                 curmon.ClickStrengthCorrectiveVector = 10;
+                _coefDamage = 1.0f;
+                _coefHealth = 1.0f;
+                curmon._coefArmor = 1.0f;
+                _coefMagicResist = 1.0f;
+                _coefExperiance = 1.0f;
+                _coefDrop = 1.0f;
+                _coefGold = 1.0f;
                 break;
         }
         curmon.SaveClickStrengthCorrectiveVector = curmon.ClickStrengthCorrectiveVector;
         HealthPoints = BaseHealthPoints;
-        Damage = BaseDamage;
-        Expereance = BaseExpereance;
-        DropChanse = BaseDropChanse;
-        Armor = BaseArmor;
-        Gold = BaseGold;
-        MagResist = BaseMagResist;   
+        //curmon.Damage //= BigMom.PP.CalculateHit() * _coefDamage ;
+        
+        Debug.Log("Coef " + _coefDamage);
+        curmon.Expereance = BaseExpereance;
+        curmon.DropChanse = BaseDropChanse;
+        curmon.Armor = BaseArmor;
+        curmon.Gold = BaseGold;
+        curmon.MagResist = BaseMagResist;   
     }
 
     /*

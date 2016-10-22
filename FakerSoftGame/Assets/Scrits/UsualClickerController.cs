@@ -245,13 +245,13 @@ public class UsualClickerController : MonoBehaviour {
         if (currentMonster.HealthPoints > 0)
         {
 
-           
-            _clickStrength = BigMom.PP.CalculateHit(currentMonster);
+
+            _clickStrength =  BigMom.PP.CalculateHit(currentMonster);
          //   Debug.Log(_clickStrength);
             Debug.Log(currentMonster.ClickStrengthCorrectiveVector);
             currentMonster.HealthPoints -= _clickStrength;
+            
 
-          
             _healthBar.transform.localScale = new Vector3(currentMonster.HealthPoints, 1f, 1f);  
           //  BigMom.ENC.UpdateScore(); // we really need this?
 
