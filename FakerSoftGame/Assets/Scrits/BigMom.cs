@@ -33,6 +33,8 @@ public static class BigMom
 
     public static PlayerParametrs PP;
 
+
+
     public static void Init()
     {
         HM = GameObject.FindObjectOfType<HealingMonster>();
@@ -41,6 +43,7 @@ public static class BigMom
         UCC = GameObject.FindObjectOfType<UsualClickerController>();
         GC = GameObject.FindObjectOfType<GameController>();
         PP = GameObject.FindObjectOfType<PlayerParametrs>();
+     
     }
 
 }

@@ -103,7 +103,7 @@ public class MonstersBasicClass : MonoBehaviour {
     [HideInInspector]
     public float CorrectionMagResist;
 
-    public float CurrentHealth ;
+    public float CurrentHealth;
     public float BasicHealth;
 
     private const float HEAL_COLDOWN_WALUE = 6f;
@@ -505,16 +505,9 @@ public class MonstersBasicClass : MonoBehaviour {
                         mob.AlreadyHealTarget = false;
                     
                 }
-               
-
-
-            }
+                      }
         }
     }
-
-
-
-
     void LateUpdate()
     {
     //    checkExistingMonsterTypesInGame();
