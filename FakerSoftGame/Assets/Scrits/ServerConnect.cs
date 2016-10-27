@@ -7,25 +7,23 @@ using com.shephertz.app42.paas.sdk.csharp;
 using com.shephertz.app42.paas.sdk.csharp.user;
 
 
-public class ServerConnect: MonoBehaviour {
-    public Text _inputLogin, _inputPassword, _inputMail;
+public class ServerConnect : MonoBehaviour
+{
+    public InputField _inputLogin, _inputPassword, _inputMail;
 
     UserService userService = App42API.BuildUserService();
 
-    string userName, pwd,emailId;
+    string userName, pwd, emailId;
 
-    public void Registr() {
 
-         userName = _inputLogin.text;   //= "GameLeadMmrBank";
-         pwd = _inputPassword.text; //= "ujlfytrhvkz111";
-         emailId = _inputMail.text; //= "bogdanlikhoglyad@gmail.com";
-
-    }
 
     public void ServerWorking()
     {
-        
-        App42API.Initialize("c53587259f23dd894259dfa9b7ac90e7dca48a3b9e2345f372bd6bd3b826e2d0","0029c09894c20fe1d28bade219995e1204f24a4cbd407e725eb4271a5e29e122");
+        userName = _inputLogin.text;
+        pwd = _inputPassword.text;
+        emailId = _inputMail.text;
+
+        App42API.Initialize("5bff0ea5a179de0a573a0550b66ee7b310558968438973df420a20d276adb042", "47dd42cd8ff5935647bfbab517f684f9931adb29dd36db6dfdddc16d8f958834");
         userService.CreateUser(userName, pwd, emailId, new UnityCallBack());
     }
 
@@ -42,5 +40,5 @@ public class UnityCallBack : App42CallBack
     {
         Debug.Log("Exception : " + e);
 
-    } 
+    }
 }
