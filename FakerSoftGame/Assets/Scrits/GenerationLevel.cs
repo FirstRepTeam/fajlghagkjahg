@@ -5,7 +5,7 @@ using System;
 using UnityEngine.SceneManagement;
 
 public class GenerationLevel : MonoBehaviour {
-    int level;
+   /* int level;
     public GameObject levelUI;
     string[] levels = { "Вялый лес", "Дмечуе пески", "Сливная пустыня" };
     public Image background;
@@ -39,7 +39,7 @@ public class GenerationLevel : MonoBehaviour {
             }
         }
     }
-
+    */
     public void StartFight()
     {
         SceneManager.LoadScene("clickScene");

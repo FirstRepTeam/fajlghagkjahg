@@ -5,6 +5,6 @@ public class ChangeScene : MonoBehaviour {
 
 	public void ChangScen()
     {
-        SceneManager.LoadScene("SceneUI");
+        SceneManager.LoadScene("NewSceneUI");
     }
 }
