@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
@@ -62,14 +63,11 @@ public class UsualClickerController : MonoBehaviour {
         _monsterHitbox = Monster.GetComponent<BoxCollider2D>();
         correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
         currentMonster = BigMom.ENC.BufferMonster;
-        if (currentMonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
-        {
-            BigMom.ENC.UsedMonstersList.Add(currentMonster);
-        }
-        else
-        {
-            currentMonster.ColdownMonsterDestroted = true;
-        }
+      
+      //  else
+     //   {
+     //       currentMonster.ColdownMonsterDestroted = true;
+   //    }
         currentMonster.BaseHealthPoints = BigMom.PP._monsterHealth;
       //  checkMonsterType();
       // BigMom.ENC.MonsterWasKilled_E.AddListener(checkMonsterType);
@@ -81,6 +79,14 @@ public class UsualClickerController : MonoBehaviour {
         if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Healer)
         {
             BigMom.ENC.HealersList.Add(currentMonster);
+            BigMom.ENC.healersMonstersCount += 1;
+            
+            if(BigMom.ENC.healersMonstersCount > 0)
+            {
+                BigMom.ENC.isHealerOnAMap = true;
+                Debug.Log("Healer monsters count ATSTART = " + BigMom.ENC.healersMonstersCount.ToString());
+            }
+            Debug.Log("What can you say about healers?  : " + BigMom.ENC.healersMonstersCount.ToString() + "Is HEaler on map " + BigMom.ENC.isHealerOnAMap.ToString());
         }
       //  currentMonster.killmeNOW = false;
         
@@ -91,6 +97,7 @@ public class UsualClickerController : MonoBehaviour {
         foreach(MonstersBasicClass monster in BigMom.ENC.UsedMonstersList)
         {
             monster.checkExistingMonsterTypesInGame();
+            
         }
         
     }
@@ -154,9 +161,22 @@ public class UsualClickerController : MonoBehaviour {
     {
         if (currentMonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
         {
-            BigMom.ENC.UsedMonstersList.Remove(currentMonster);
-            // checkMonsterType();
-            
+            foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
+            {
+                if (mob.MonsterPresonalNumber == currentMonster.MonsterPresonalNumber)
+                {
+                    //BigMom.ENC.UsedMonstersList.RemoveAt(currentMonster.MonsterPresonalNumber);
+                   
+                    Debug.Log( mob.TypeOfThisMonster.ToString() + " Deleted " + " Monsters Left: " + BigMom.ENC.UsedMonstersList.Count.ToString()  );
+                    for (int i = 0; i < BigMom.ENC.UsedMonstersList.Count; i++)
+                    {
+                        Debug.Log("Monster " + i + " = " + BigMom.ENC.UsedMonstersList[i].TypeOfThisMonster.ToString());
+                    }
+                    break;
+                }
+                
+                // checkMonsterType();
+            }
 
 
             if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.TimeEater)
@@ -170,9 +190,15 @@ public class UsualClickerController : MonoBehaviour {
             }
             if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Healer)
             {
-                BigMom.ENC.isHealerOnAMap = false;
-                BigMom.MBC.healersMonstersCount = 0;
-                Debug.Log("StoooopHeal");
+              //  Debug.Log("Healer monsters count = " + BigMom.ENC.healersMonstersCount.ToString());
+                BigMom.ENC.healersMonstersCount -= 1;
+                if (BigMom.ENC.healersMonstersCount < 0)
+                {
+                    BigMom.ENC.isHealerOnAMap = false;
+               //     Debug.Log("Healer monsters count = " + BigMom.ENC.healersMonstersCount.ToString());
+                }
+               // BigMom.ENC.healersMonstersCount = 0;
+            //    Debug.Log("StoooopHeal " + BigMom.MBC.healersMonstersCount.ToString());
             }
 
 
@@ -180,7 +206,7 @@ public class UsualClickerController : MonoBehaviour {
         //    BigMom.GC.MonsterWasKilled_E.Invoke();
             StartCoroutine(WaitAfterDeath());
             BigMom.ENC.UpdateScore();
-            BigMom.MBC.checkExistingMonsterTypesInGame();
+            
         }
         else
         {
@@ -188,7 +214,13 @@ public class UsualClickerController : MonoBehaviour {
             currentMonster.ColdownMonsterDestroted = false;
 
         }
-
+        //  BigMom.ENC.UsedMonstersList.Remove(currentMonster);
+        currentMonster.AlreadyDead = true;
+        for (int i = 0; i < BigMom.ENC.UsedMonstersList.Count; i++)
+        {
+            Debug.Log("MOnstersLeft:  " + BigMom.ENC.UsedMonstersList.Count.ToString() + " MonsterType " + BigMom.ENC.UsedMonstersList[i].TypeOfThisMonster.ToString());
+        }
+        BigMom.MBC.checkExistingMonsterTypesInGame();
     }
 
     IEnumerator WaitAfterDeath()
@@ -212,7 +244,7 @@ public class UsualClickerController : MonoBehaviour {
             }
         float converted_health = ((100 / currentMonster.BaseHealthPoints * currentMonster.HealthPoints) * MAX_SCALE_X_VALUE_FOR_HEALTHBAR) / 100;
 
-        _HealthText.text = currentMonster.HealthPoints.ToString() + "/" + currentMonster.BaseHealthPoints.ToString();
+        _HealthText.text = System.Math.Round(currentMonster.HealthPoints, 2).ToString() + "/" + currentMonster.BaseHealthPoints.ToString();
             _healthBar.transform.localScale = new Vector3(converted_health, 1f, 1f);
         if (ColdownBar != null)
             ColdownBar.transform.localScale = new Vector3(currentMonster.couldownBarValue, 1f, 1f);
@@ -227,9 +259,9 @@ public class UsualClickerController : MonoBehaviour {
 
     public void startHeal()
     {
-        if (currentMonster.TypeOfThisMonster== MonstersBasicClass.MonsterType.Healer) {
+        if (currentMonster.TypeOfThisMonster == MonstersBasicClass.MonsterType.Healer) {
             Debug.Log("WOOOOORRRRRRKKKOOOOUUUTTT");
-            currentMonster.StartHealCast(currentMonster);
+   //         currentMonster.StartHealCast(currentMonster);
         }
     }
     
@@ -248,7 +280,7 @@ public class UsualClickerController : MonoBehaviour {
 
             _clickStrength =  BigMom.PP.CalculateHit(currentMonster);
          //   Debug.Log(_clickStrength);
-            Debug.Log(currentMonster.ClickStrengthCorrectiveVector);
+            //Debug.Log(currentMonster.ClickStrengthCorrectiveVector);
             currentMonster.HealthPoints -= _clickStrength;
             
 
@@ -290,7 +322,7 @@ public class UsualClickerController : MonoBehaviour {
         currentMonster.HealCastTimeCountdown(currentMonster);
         currentMonster.HealingAura(currentMonster);
 
-        if (currentMonster.HealthPoints < currentMonster.BaseHealthPoints * 0.5f)
+        if (currentMonster.HealthPoints < currentMonster.BaseHealthPoints * 0.5f && currentMonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer)
         {
 
             currentMonster.catchMonstersAskAboutHeal(currentMonster) ;

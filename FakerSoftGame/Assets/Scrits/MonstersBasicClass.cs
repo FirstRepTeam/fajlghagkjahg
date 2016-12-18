@@ -52,6 +52,12 @@ public class MonstersBasicClass : MonoBehaviour {
     public GameObject monsterBody;
     public MonstersBasicClass currentMonster;
 
+    [HideInInspector]
+    public bool AlreadyDead = false;
+
+    [HideInInspector]
+    public int MonsterPresonalNumber;
+
     private MonstersBasicClass MonsterSaverForInvokeRepeating ;
 
     [HideInInspector]
@@ -108,7 +114,7 @@ public class MonstersBasicClass : MonoBehaviour {
 
     private const float HEAL_COLDOWN_WALUE = 6f;
 
-    public float healersMonstersCount;
+    
 
     private const float MAX_SCALE_X_VALUE_FOR_COLDOWNBAR = 12.4f;
 
@@ -290,20 +296,20 @@ public class MonstersBasicClass : MonoBehaviour {
 
     public void catchMonstersAskAboutHeal(MonstersBasicClass current_monster)
     {
-      //  Debug.Log("HEALLLLLLLLLLLLWHEREAREYOU");      
-
-        foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList )
-        {
-            if (mob.TypeOfThisMonster == MonsterType.Healer  && mob.HealColdown <= 0 && !current_monster.AlreadyHealTarget)
+        //  Debug.Log("HEALLLLLLLLLLLLWHEREAREYOU");      
+    //    if (!current_monster.AlreadyHealTarget) {
+            foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
             {
-                Debug.Log("HEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLL");
-                StartHealCast(mob);
-                current_monster.AlreadyHealTarget = true;
-                current_monster.MonsterSaverForInvokeRepeating = current_monster;
-                return;
+                if (mob.TypeOfThisMonster == MonsterType.Healer && mob.HealColdown <= 0 )
+            {
+                    Debug.Log("HEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLL");
+                    StartHealCast(mob);
+                 //   current_monster.AlreadyHealTarget = true;
+                    current_monster.MonsterSaverForInvokeRepeating = current_monster;
+                    return;
+                }
             }
-        }
-
+      //  }
     }
 
 
@@ -315,8 +321,8 @@ public class MonstersBasicClass : MonoBehaviour {
         {
             if (mob.TypeOfThisMonster == MonsterType.Healer)
             {
-                healersMonstersCount += 1;
-                BigMom.ENC.isHealerOnAMap = true;
+            //    healersMonstersCount += 1;
+              //  BigMom.ENC.isHealerOnAMap = true;
             }
             if (mob.TypeOfThisMonster == MonsterType.Armored)
             {
@@ -345,12 +351,12 @@ public class MonstersBasicClass : MonoBehaviour {
     public void HealingAura(MonstersBasicClass curmonster)
     {
 
-        if (BigMom.ENC.isHealerOnAMap && curmonster.HealthPoints <= curmonster.BaseHealthPoints && curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer &&
+        if (BigMom.ENC.isHealerOnAMap && curmonster.HealthPoints < curmonster.BaseHealthPoints && curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.Healer &&
             curmonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
         {
             float HealAuraCoeficient = 1f;
            
-                curmonster.HealthPoints += healersMonstersCount*HealAuraCoeficient * Time.deltaTime;
+                curmonster.HealthPoints += BigMom.ENC.healersMonstersCount*HealAuraCoeficient * Time.deltaTime;
             
         }
 
@@ -358,26 +364,23 @@ public class MonstersBasicClass : MonoBehaviour {
 
     public void StartHealCast(MonstersBasicClass curmonster)
     {
-        if (curmonster.TypeOfThisMonster == MonsterType.Healer && curmonster.HealColdown <=0 )//&& curmonster == BigMom.ENC.HealersList[0])
-        {
-            bool isSomebodyNeedToBeHealed = false;
-          foreach(MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
-            {
-                if (mob.HealthPoints < mob.BasicHealth * 0.5f)
-                {
-                    isSomebodyNeedToBeHealed = true;
-                }
-            }
+      //  if (curmonster.TypeOfThisMonster == MonsterType.Healer && curmonster.HealColdown <=0 )//&& curmonster == BigMom.ENC.HealersList[0])
+      //  {
+        //    bool isSomebodyNeedToBeHealed = false;
+       //   foreach(MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
+        //    {
+          //      if (mob.HealthPoints < mob.BasicHealth * 0.5f)
+            //    {
+              //      isSomebodyNeedToBeHealed = true;
+                //    return;
+              //  }
+          //  }
             
-            if (isSomebodyNeedToBeHealed)
-            {
+           // if (isSomebodyNeedToBeHealed)
+           // {
                 
-                
-             
-
-
                 curmonster.HealColdown = HEAL_COLDOWN_WALUE;
-                isSomebodyNeedToBeHealed = false;
+             //   isSomebodyNeedToBeHealed = false;
                 curmonster.HealCastTime = 4f;
               curmonster.StartHealCastSpelCountdown = true;
                 curmonster.couldownBarValue = 0;
@@ -386,14 +389,14 @@ public class MonstersBasicClass : MonoBehaviour {
                 //     InvokeRepeating("SpellColdown", 0, 1f);
                 // InvokeRepeating("SpellColdown", 0, 1f);
                 //   HealSomebody();
-                BigMom.ENC.HealersList.RemoveAt(0);
-                BigMom.ENC.HealersList.Add(curmonster);
-            }
+             //   BigMom.ENC.HealersList.RemoveAt(0);
+             //   BigMom.ENC.HealersList.Add(curmonster);
+           // }
 
 
           //  curmonster.CurrentHealth += 1f * Time.deltaTime;
 
-        }
+       // }//
 
     }
 
@@ -412,25 +415,34 @@ public class MonstersBasicClass : MonoBehaviour {
         MonstersBasicClass weakestMonster = BigMom.ENC.UsedMonstersList[0];
         foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
         {
-            if ( mob.HealthPoints < lowestHealth)
+            if ( mob.HealthPoints < lowestHealth && !mob.AlreadyDead && mob.TypeOfThisMonster != MonsterType.Healer && BigMom.ENC.isHealerOnAMap)
             {
                 lowestHealth = mob.HealthPoints;
                 weakestMonster = mob;
             }
         }
 
-        if (weakestMonster.HealthPoints < weakestMonster.BasicHealth)
-        {
-            float healValue = weakestMonster.BasicHealth * 0.5f;
+       // if (weakestMonster.HealthPoints < weakestMonster.BasicHealth)
+       // {
+            float healValue = weakestMonster.BaseHealthPoints / 2.0f;
 
-            if (weakestMonster.HealthPoints + healValue >= weakestMonster.BasicHealth)
-            {
-                healValue = weakestMonster.HealthPoints + healValue - weakestMonster.BasicHealth;
-            }
+        //            if (weakestMonster.HealthPoints + healValue > weakestMonster.BasicHealth)
+        // {
+        //     healValue = weakestMonster.HealthPoints + healValue - weakestMonster.BasicHealth;
+        // }
+
+        if (healValue + weakestMonster.HealthPoints > weakestMonster.BaseHealthPoints)
+        {
+            weakestMonster.HealthPoints = weakestMonster.BaseHealthPoints;
+        }
+        else
+        {
             weakestMonster.HealthPoints += healValue;
-          
         }
 
+          
+       // }
+        Debug.Log("Hearted monster HP = " + weakestMonster.HealthPoints.ToString() + " HealValue = " + healValue.ToString());
         //  BigMom.GC.TimeIsOutLetsEndThisGame = false;
 
     }
@@ -466,7 +478,7 @@ public class MonstersBasicClass : MonoBehaviour {
     public void HealCastTimeCountdown (MonstersBasicClass monstr){
        
         if (monstr.TypeOfThisMonster == MonsterType.Healer && monstr.StartHealCastSpelCountdown) {
-
+/*
             if (monstr.HealCastTime == 4.0f)
             {
                 BigMom.ENC.BufferMonster = BigMom.ENC.spelCastMonster;
@@ -483,22 +495,22 @@ public class MonstersBasicClass : MonoBehaviour {
                   
                 monstr.coldownMonster = BigMom.ENC.BufferMonster;
             }
-
+            */
             monstr.HealCastTime -= Time.deltaTime;
-            
 
 
-            if (monstr.HealCastTime < 0f )
-                {
-                Debug.Log(monstr.coldownMonster.HealthPoints);
-                if (monstr.coldownMonster.ColdownMonsterDestroted == true)
-                {
-                    monstr.coldownMonster.killmeNOW = true;
-                    monstr.StartHealCastSpelCountdown = false;
-                    HealSomebody();
-                    
-                }
-               
+
+            if (monstr.HealCastTime < 0f)
+            {
+                //  Debug.Log(monstr.coldownMonster.HealthPoints);
+                //  if (monstr.coldownMonster.ColdownMonsterDestroted == true)
+                //   {
+               // monstr.coldownMonster.killmeNOW = true;
+                monstr.StartHealCastSpelCountdown = false;
+                HealSomebody();
+
+                //     }
+            }
                 foreach (MonstersBasicClass mob in BigMom.ENC.UsedMonstersList)
                 {
                    
@@ -507,7 +519,7 @@ public class MonstersBasicClass : MonoBehaviour {
                 }
                       }
         }
-    }
+    
     void LateUpdate()
     {
     //    checkExistingMonsterTypesInGame();

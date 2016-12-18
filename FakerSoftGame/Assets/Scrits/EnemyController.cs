@@ -22,6 +22,9 @@ public class EnemyController : MonoBehaviour {
     public bool isHealerOnAMap=false;
 
     [HideInInspector]
+    public float healersMonstersCount = 0;
+
+    [HideInInspector]
     public bool isArmorBufferOnAMap = false;
 
     [HideInInspector]
@@ -211,6 +214,7 @@ public class EnemyController : MonoBehaviour {
     public IEnumerator  spawnAndWait(int MV)
     {
         MonstersBasicClass current_monster;
+        UsedMonstersList.Clear();
         for (int i = 0; i < MV; i++)
         {
             current_monster = GetRandomMonsterAndRemove(_MonstersList);
@@ -218,12 +222,18 @@ public class EnemyController : MonoBehaviour {
            
             yield return new WaitForSeconds(0.1f);
             Instantiate(current_monster.monsterBody, current_monster.spawnSlot, Quaternion.identity);
+            current_monster.MonsterPresonalNumber = i;
             ClickStrengthCorrective = current_monster.ClickStrengthCorrectiveVector;
             BufferMonster = current_monster;
             //  BigMom.MBC.initMonster(GetRandomMonsterTypeAndRemove(_monsterTypesList), choseRandomSpawnSpot(), monster1);
-
+            if (current_monster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
+            {
+               UsedMonstersList.Add(current_monster);
+            }
         }
-        
+        for (int i = 0; i < UsedMonstersList.Count; i++) {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  " + UsedMonstersList[i].TypeOfThisMonster.ToString());
+                }
     }
 
     public void UpdateScore()
