@@ -1,0 +1,6 @@
+D:\Новая папка\FakerSoftGame\save\save\bin\Debug\save.exe.config
+D:\Новая папка\FakerSoftGame\save\save\bin\Debug\save.exe
+D:\Новая папка\FakerSoftGame\save\save\bin\Debug\save.pdb
+D:\Новая папка\FakerSoftGame\save\save\obj\Debug\save.csprojResolveAssemblyReference.cache
+D:\Новая папка\FakerSoftGame\save\save\obj\Debug\save.exe
+D:\Новая папка\FakerSoftGame\save\save\obj\Debug\save.pdb
