@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/NewSceneUI.unity
+- path: Assets/Scenes/Server create.unity
   isLoaded: 1
   isActive: 1
