@@ -244,7 +244,7 @@ public class UsualClickerController : MonoBehaviour {
             }
         float converted_health = ((100 / currentMonster.BaseHealthPoints * currentMonster.HealthPoints) * MAX_SCALE_X_VALUE_FOR_HEALTHBAR) / 100;
 
-        _HealthText.text = System.Math.Round(currentMonster.HealthPoints, 2).ToString() + "/" + currentMonster.BaseHealthPoints.ToString();
+        _HealthText.text = System.Math.Round(currentMonster.HealthPoints, 0).ToString() + "/" + currentMonster.BaseHealthPoints.ToString();
             _healthBar.transform.localScale = new Vector3(converted_health, 1f, 1f);
         if (ColdownBar != null)
             ColdownBar.transform.localScale = new Vector3(currentMonster.couldownBarValue, 1f, 1f);

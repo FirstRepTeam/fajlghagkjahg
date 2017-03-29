@@ -58,7 +58,8 @@ public class GameController : MonoBehaviour {
         InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
         _retryButton.SetActive(false);
-        BigMom.ENC.SpawnMonstersAfterDeath();        
+        BigMom.ENC.SpawnMonstersAfterDeath();
+        BigMom.PS.RefreshSpellColdown();
     }
 
 

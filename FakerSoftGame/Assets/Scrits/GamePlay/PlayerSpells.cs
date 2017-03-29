@@ -16,6 +16,14 @@ public class PlayerSpells : MonoBehaviour {
         StartCoroutine(WaitForSpellDurationThenOffEffects());
     }
 
+    public void RefreshSpellColdown()
+    {
+        StopCoroutine(WaitForSpellColdownAndEnable());
+        StopCoroutine(WaitForSpellDurationThenOffEffects());
+        rageSpell.SetActive(true);
+        BigMom.PP.HitDecreaseCoefForSpell = 1f;
+    }
+
     private IEnumerator WaitForSpellColdownAndEnable()
     {
         yield return new WaitForSeconds(Coldown);

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using LitJson;
 using System.Collections.Generic;
 using System.IO;
+using App42Json;
 
 public class ItemDatabase : MonoBehaviour {
     private List<Item> database = new List<Item>(); 
