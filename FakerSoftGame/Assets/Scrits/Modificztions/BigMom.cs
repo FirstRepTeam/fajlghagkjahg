@@ -20,6 +20,7 @@ public static class BigMom
     /// <summary>
     /// Enviroment Controller
     /// </summary>
+    public static Back BackUIScript;  // тут лучше не задавать лишних вопросов!
 
     public static HealingMonster HM;
 
@@ -38,6 +39,7 @@ public static class BigMom
 
     public static void Init()
     {
+        BackUIScript = GameObject.FindObjectOfType<Back>();
         HM = GameObject.FindObjectOfType<HealingMonster>();
         MBC = GameObject.FindObjectOfType<MonstersBasicClass>();
         ENC = GameObject.FindObjectOfType<EnemyController>();
