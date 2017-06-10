@@ -8,16 +8,7 @@ using UnityEngine.EventSystems;
 public class UnformatButtons : MonoBehaviour//, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler
  {
     Image CountryImg;
-    public GameObject shop;
-    public GameObject map;
-    public GameObject inventory;
-    Image SelectCountry;
-    // public event testclickimage TapEvent;
-    public delegate void ClickAction();
-    public static event ClickAction OnClicked;
-
-    // public Texture2D gg;
-    public Image img;
+    
     Vector3 initialVectorBottomLeft;
     Vector3 initialVectorTopRight;
 
