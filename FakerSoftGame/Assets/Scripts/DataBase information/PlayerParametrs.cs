@@ -107,7 +107,7 @@ public class PlayerParametrs : MonoBehaviour {
          _clickDamage = _basicClickDamage + (_finalStatePower * _SAICoef);
         float _effectOnCritChance = 3 * _basicCritChance * _finalStateAgility;
         float _critChance = (_basicCritChance + (_finalStateAgility / (_koefB15 * _SAICoef))) + _effectOnCritChance;
-        float _critStrengthCoef = 1.5f;
+        // float _critStrengthCoef = 1.5f;
         float _skillPowercoef = _basicMultiplyMagicPower+(_finalStateIntellect/(_koefB15/(_SAICoef)));
         float _coldounSkillCoef = 1.0f;
         _resistCoef = _basicResistCoef + (_koefB15 / _finalStateStamina);
