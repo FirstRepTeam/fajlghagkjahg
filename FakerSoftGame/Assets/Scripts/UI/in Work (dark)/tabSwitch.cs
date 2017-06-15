@@ -1,27 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class tabSwitch : MonoBehaviour, IPointerClickHandler {
-private GameObject skills;
-private GameObject inv;
-private GameObject stats;
+public GameObject skills;
+public GameObject inv;
+public GameObject stats;
+public GameObject resetHeight1;
+public GameObject resetHeight2;
 private string currentTab;
-private string teststr;
+
 void Start(){
 	currentTab = gameObject.name;
-	skills = transform.parent.parent.Find("content").Find("skills").gameObject;
-	inv = transform.parent.parent.Find("content").Find("inv").gameObject;
-	stats = transform.parent.parent.Find("content").Find("stats").gameObject;
-	// Debug.Log("skill tab = "+skills.name);
 }
-/*
-если куртаб = таблефт
-то вырубить инвентарь и статсы
-
-
-*/
 void IPointerClickHandler.OnPointerClick(PointerEventData eventData){
 	if(currentTab == "Tab_left"){
 		inv.SetActive(false);
@@ -38,5 +31,11 @@ void IPointerClickHandler.OnPointerClick(PointerEventData eventData){
 		stats.SetActive(true);
 		skills.SetActive(false);
 	}
+	resetHeight1.GetComponent<RectTransform>().sizeDelta = new Vector2 (100, 50);
+	resetHeight1.GetComponent<Image>().color = new Color32(255,255,255,255);
+	resetHeight1.transform.Find("Tab Name").GetComponent<Text>().fontSize = 14;
+	resetHeight2.GetComponent<RectTransform>().sizeDelta = new Vector2 (100, 50);
+	resetHeight2.GetComponent<Image>().color = new Color32(255,255,255,255);
+	resetHeight2.transform.Find("Tab Name").GetComponent<Text>().fontSize = 14;
 }
 }
