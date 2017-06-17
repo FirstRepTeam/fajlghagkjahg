@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 
 
@@ -19,17 +21,29 @@ GetComponent<RectTransform>().hierarchyCount
 узнать сколько потомков  = длина 3
 узнать который из них интересен
 */
+GameObject[] objectArr;
+int spendpoints = 5;
+
 	void Start(){
-		GameObject[] objectArr = new GameObject[transform.childCount];
-		Debug.Log("перед фор");
+		objectArr = new GameObject[transform.childCount];
 		for (int i = 0; i < objectArr.Length; i++)
 		{
-			 objectArr[i] = transform.GetChild(i).gameObject;
-			 Debug.Log(objectArr[i].name);
+			objectArr[i] = transform.GetChild(i).gameObject;
+			objectArr[i].AddComponent<EventTrigger>();
+			EventTrigger trigger = objectArr[i].GetComponent<EventTrigger>();
+			EventTrigger.Entry entry = new EventTrigger.Entry();
+			entry.eventID = EventTriggerType.PointerDown;
+			entry.callback.AddListener((data)=>{mouseClick();});
+			trigger.triggers.Add( entry );
 		}
 		Debug.Log("конец фор");
-		var x = BigMom.PSP.points + 2;
-		Debug.Log(BigMom.PSP.points +" "+ x);
 	}
-
+	void mouseClick(){
+	   if(PlayerSkillPoints.skillPoints > 0){
+		PlayerSkillPoints.skillPoints -= spendpoints;
+	   }
+	   else{
+		   Debug.Log("недостаточно поинтов");
+	   }   
+	}
 }
