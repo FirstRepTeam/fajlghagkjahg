@@ -35,6 +35,8 @@ public static class BigMom
     public static PlayerParametrs PP;
 
     public static PlayerSpells PS;
+    
+    public static PlayerSkillPoints PSP;
 
 
     public static void Init()
@@ -47,6 +49,7 @@ public static class BigMom
         GC = GameObject.FindObjectOfType<GameController>();
         PP = GameObject.FindObjectOfType<PlayerParametrs>();
         PS = GameObject.FindObjectOfType<PlayerSpells>();
+        PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
     }
 
 }
