@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+// Тут должны быть реализованы специальные способности игрока, которые он будет использовать на протяжении схватки.
 public class PlayerSpells : MonoBehaviour {
 
 	private float Coldown = 15f;

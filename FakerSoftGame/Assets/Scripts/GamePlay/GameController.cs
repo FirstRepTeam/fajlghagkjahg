@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Events;
 
+/*
+Здесь основніе состояния игры, такие как начало игры конец игры, и контроль времени на уровень
+    */
 public class GameController : MonoBehaviour {
 
     private Vector2 _oldValueOfHealthBar;
@@ -71,10 +74,7 @@ public class GameController : MonoBehaviour {
 
             TimeIsOutLetsEndThisGame = true;
             _timeIsOut.SetActive(true);
-            _retryButton.SetActive(true);
-            
-                
-            
+            _retryButton.SetActive(true);          
         }
     }
 	

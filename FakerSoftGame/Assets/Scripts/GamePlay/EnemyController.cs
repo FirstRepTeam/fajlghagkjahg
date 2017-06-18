@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Events;
 
+// Здесь инициализируются главные объекты сигрового процесса - монстры. Им задаются точки спауна, решается сколько их будет
+// и каккие они будут, создаются и заполняются списки с текущими монстрами и т.д. 
 
 public class EnemyController : MonoBehaviour {
 
@@ -80,12 +82,7 @@ public class EnemyController : MonoBehaviour {
         _spwnPointsList.Add(spawnSpot5.transform.position);
 
 
-        monster1 = new MonstersBasicClass();
-        monster2 = new MonstersBasicClass();
-        monster3 = new MonstersBasicClass();
-        monster4 = new MonstersBasicClass();
-        monster5 = new MonstersBasicClass();
-        spelCastMonster = new MonstersBasicClass();
+        CreateMonsters();
 
         _monsterTypesList = BigMom.MBC.MonsterTypesList;
         initMonsters();
@@ -107,6 +104,16 @@ public class EnemyController : MonoBehaviour {
         Debug.Log(monster1.TypeOfThisMonster.ToString() );
         Debug.Log(monster2.TypeOfThisMonster.ToString());
         Debug.Log(monster3.TypeOfThisMonster.ToString());
+    }
+
+    private void CreateMonsters()  // создание монстров пока без каких либо различий друг от друга
+    {
+        monster1 = new MonstersBasicClass();
+        monster2 = new MonstersBasicClass();
+        monster3 = new MonstersBasicClass();
+        monster4 = new MonstersBasicClass();
+        monster5 = new MonstersBasicClass();
+        spelCastMonster = new MonstersBasicClass();
     }
 
     public void DestroyAllMobs()
@@ -141,12 +148,7 @@ public class EnemyController : MonoBehaviour {
         _spwnPointsList.Add(spawnSpot4.transform.position);
         _spwnPointsList.Add(spawnSpot5.transform.position);
 
-        monster1 = new MonstersBasicClass();
-        monster2 = new MonstersBasicClass();
-        monster3 = new MonstersBasicClass();
-        monster4 = new MonstersBasicClass();
-        monster5 = new MonstersBasicClass();
-        spelCastMonster = new MonstersBasicClass();
+        CreateMonsters();
 
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.Armored);
         _monsterTypesList.Add(MonstersBasicClass.MonsterType.Healer);
@@ -168,7 +170,7 @@ public class EnemyController : MonoBehaviour {
     }
 
 
-    public void initMonsters()
+    public void initMonsters()  // задаем монстру пааметры, тут достаточно указать тип монстра, его позицию на карте ну и сам объект монстра
     {
         BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster1);
         BigMom.MBC.initMonster(GetRandomMonsterType(_monsterTypesList), choseRandomSpawnSpot(), monster2);
@@ -196,7 +198,7 @@ public class EnemyController : MonoBehaviour {
     }
 
 
-    public MonstersBasicClass GetRandomMonsterAndRemove(List<MonstersBasicClass> list)
+    public MonstersBasicClass GetRandomMonsterAndRemove(List<MonstersBasicClass> list) // получить объект из списка и тут же удалить его
     {
         int randomID = UnityEngine.Random.Range(0, list.Count);
         MonstersBasicClass RandomMonster = list[randomID];
