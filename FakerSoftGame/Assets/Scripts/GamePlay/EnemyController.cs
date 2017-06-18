@@ -284,7 +284,7 @@ public class EnemyController : MonoBehaviour {
 
     public void SpawnEnemy()
     {
-        Vector3 MonsterPosition = choseRandomSpawnSpot();
+      //  Vector3 MonsterPosition = choseRandomSpawnSpot();
        
         
      //   Instantiate(Monster, MonsterPosition, Quaternion.identity);

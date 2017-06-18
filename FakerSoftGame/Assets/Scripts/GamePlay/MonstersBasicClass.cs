@@ -58,15 +58,15 @@ public class MonstersBasicClass : MonoBehaviour {
     [HideInInspector]
     public int MonsterPresonalNumber;
 
-    private MonstersBasicClass MonsterSaverForInvokeRepeating ;
+  //  private MonstersBasicClass MonsterSaverForInvokeRepeating ;
 
     [HideInInspector]
     public bool AlreadyHealTarget = false;
 
     [HideInInspector]
     public float BaseHealthPoints;
-    [HideInInspector]
-    private float BaseDamage = 0.1f;
+  //  [HideInInspector]
+  //  private float BaseDamage = 0.1f;
     [HideInInspector]
     private float BaseExpereance = 1.0f;
     [HideInInspector]
@@ -305,7 +305,7 @@ public class MonstersBasicClass : MonoBehaviour {
                     Debug.Log("HEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLL");
                     StartHealCast(mob);
                  //   current_monster.AlreadyHealTarget = true;
-                    current_monster.MonsterSaverForInvokeRepeating = current_monster;
+                   // current_monster.MonsterSaverForInvokeRepeating = current_monster;
                     return;
                 }
             }

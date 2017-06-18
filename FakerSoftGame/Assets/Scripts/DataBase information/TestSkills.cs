@@ -18,13 +18,12 @@ public class TestSkills : MonoBehaviour {
 
     [SerializeField]
     private Button _strenghtMinus, _agilityMinus, _intellectMinus, _staminaMinus;
-
-
+   
     public void ShowPanelSkills()
     {
         _skillsPanel.SetActive(!_skillsPanel.activeSelf);
     }
-
+    
 
     public void StrenghtPlus()
     {

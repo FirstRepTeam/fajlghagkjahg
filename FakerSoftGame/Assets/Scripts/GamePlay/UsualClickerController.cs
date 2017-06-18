@@ -16,7 +16,7 @@ public class UsualClickerController : MonoBehaviour {
     [SerializeField]
     private  TextMesh _HealthText;
 
-    private float  coldownBarVelue;
+  //  private float  coldownBarVelue;
 
     
     public GameObject ColdownBar;
@@ -34,16 +34,16 @@ public class UsualClickerController : MonoBehaviour {
     private const float MAX_SCALE_X_VALUE_FOR_HEALTHBAR = 12.4f;
     private const float BASE_HEALTH_DECREESE_COEFICIENT = 0.01f;
     private float _clickStrength;
-    private float _healthObjLockalScaleX;
-    private float _healthbarMaxValue;
-    private float critChanse = 1.05f;
+  //  private float _healthObjLockalScaleX;
+  //  private float _healthbarMaxValue;
+   // private float critChanse = 1.05f;
     private BoxCollider2D _monsterHitbox;
 
     private float MonsterArmorLevel;
 
     public bool stopFastDecreaseTime = true;
 
-    private float correctiveHitStrangth;
+   // private float correctiveHitStrangth;
     // public EnemyController gg = new EnemyController();
     private MonstersBasicClass currentMonster;
 
@@ -54,14 +54,14 @@ public class UsualClickerController : MonoBehaviour {
 
     void Start()
     {
-     _healthObjLockalScaleX = _healthBar.transform.localScale.x;
+   //  _healthObjLockalScaleX = _healthBar.transform.localScale.x;
         
-        if(ColdownBar!= null)
-        coldownBarVelue = ColdownBar.transform.localScale.x;
+       // if(ColdownBar!= null)
+     //   coldownBarVelue = ColdownBar.transform.localScale.x;
 
-        _healthbarMaxValue = _healthObjLockalScaleX;
+     //   _healthbarMaxValue = _healthObjLockalScaleX;
         _monsterHitbox = Monster.GetComponent<BoxCollider2D>();
-        correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
+      //  correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
         currentMonster = BigMom.ENC.BufferMonster;
       
       //  else
