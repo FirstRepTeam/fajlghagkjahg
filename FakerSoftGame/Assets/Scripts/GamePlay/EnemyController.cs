@@ -73,8 +73,6 @@ public class EnemyController : MonoBehaviour {
 
     void Start()
     {
-        BigMom.Init();
-
         _spwnPointsList.Add(spawnSpot1.transform.position);
         _spwnPointsList.Add(spawnSpot2.transform.position);
         _spwnPointsList.Add(spawnSpot3.transform.position);

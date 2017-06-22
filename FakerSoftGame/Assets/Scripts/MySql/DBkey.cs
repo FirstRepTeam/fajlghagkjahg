@@ -6,8 +6,7 @@ public class DBkey : MonoBehaviour {
 public string dbkey;
 [HideInInspector]
 public string dbsecretkey;
-
-void Start(){
+void Awake(){
 dbsecretkey = Sha1Sum(dbkey);
 }
     public string Sha1Sum(string strToEncrypt)

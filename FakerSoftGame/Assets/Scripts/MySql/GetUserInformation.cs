@@ -10,8 +10,8 @@ private string secretKey;
 string Pid, Plogin, Ppass, Pmail, Pint, Psta, Pagi, Pstr, Pexp, Plvl, PCchance, PCdamage;
 // В скрипте происходит всякая магия. Не лезь - убьет!
 	void Start () {
+        secretKey = BigMom.DBkey.dbsecretkey;
         GetUserInfo();
-        // Debug.Log(BigMom.DBkey.dbsecretkey);
 	}
     void GetUserInfo(){
         if(secretKey!=null){
