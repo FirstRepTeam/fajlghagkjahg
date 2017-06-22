@@ -36,7 +36,7 @@ int spendpoints = 5;
 			entry.callback.AddListener((data)=>{mouseClick();});
 			trigger.triggers.Add( entry );
 		}
-		Debug.Log("конец фор");
+		// Debug.Log("конец фор");
 	}
 	void mouseClick(){
 	   if(PlayerSkillPoints.skillPoints > 0){
