@@ -1691,6 +1691,7 @@ GameObject:
   - component: {fileID: 394487800}
   - component: {fileID: 394487798}
   - component: {fileID: 394487797}
+  - component: {fileID: 394487801}
   m_Layer: 0
   m_Name: DataBase
   m_TagString: Untagged
@@ -1704,12 +1705,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 394487796}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb3c336f6598b4aa89252c13d2f14594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: dark
 --- !u!114 &394487798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1745,6 +1745,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c02aa1b0111ca42ffaf11af8c4067e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &394487801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 394487796}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2affb0bb542472a9085c61704b040a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &415438073 stripped

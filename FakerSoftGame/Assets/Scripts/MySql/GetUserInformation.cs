@@ -5,15 +5,15 @@ using System.Security.Cryptography;
 using System.Text;
 
 public class GetUserInformation : MonoBehaviour {
-public string user;
 private string secretKey;
 string Pid, Plogin, Ppass, Pmail, Pint, Psta, Pagi, Pstr, Pexp, Plvl, PCchance, PCdamage;
 // В скрипте происходит всякая магия. Не лезь - убьет!
-	void Start () {
+	void Start() {
         secretKey = BigMom.DBkey.dbsecretkey;
-        GetUserInfo();
+        // ниже пример использования 
+        //GetUserInfo("dark");
 	}
-    void GetUserInfo(){
+    void GetUserInfo(string user){
         if(secretKey!=null){
             WWWForm form = new WWWForm();
             form.AddField("user", user);
