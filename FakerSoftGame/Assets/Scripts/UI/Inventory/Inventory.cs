@@ -14,6 +14,10 @@ public class Inventory : MonoBehaviour {
     void Start()
     {
 
+///рпарапрапр
+
+
+
         slotAmount = 20;
         inventorySlot.transform.localScale =new Vector3(0.1f, 0.1f, 0.1f);
           //slotPanel = inventoryPanel.transform.FindChild("Slot Panel").gameObject;
